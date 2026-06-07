@@ -1,1 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Locations — K Food Solution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root {
+      --color-bg: #FAFAF7;
+      --color-text: #1A1A1A;
+      --color-text-light: #6B6B6B;
+      --color-accent: #C8102E;
+      --color-white: #FFFFFF;
+      --color-dark: #111111;
+      --color-border: #E0DDD6;
+      --font-en: 'Google Sans', 'Google Sans Display', 'Product Sans', sans-serif;
+      --font-kr: 'Noto Sans KR', sans-serif;
+      --font-body: var(--font-en);
+      --max-width: 1280px;
+      --header-height: 80px;
+    }
+
+    html[lang="ko"] { --font-body: var(--font-kr); }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      background: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--header-height);
+      background: rgba(250, 250, 247, 0.95);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border); z-index: 100;
+    }
+    .header-inner {
+      max-width: var(--max-width); margin: 0 auto;
+      padding: 0 40px; height: 100%;
+      display: flex; align-items: center;
+      justify-content: space-between; position: relative;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--color-text); }
+    .logo-img { height: 40px; width: auto; display: block; }
+    .nav-links {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 36px; list-style: none;
+    }
+    .nav-links a { text-decoration: none; color: var(--color-text); font-size: 15px; font-weight: 400; position: relative; padding-bottom: 2px; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: var(--color-accent); transition: width 0.3s ease; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-right > a { text-decoration: none; font-size: 14px; color: var(--color-text-light); }
+    .lang-toggle { display: flex; align-items: center; background: #EEEEE9; border-radius: 8px; padding: 3px; cursor: pointer; user-select: none; }
+    .lang-toggle button { background: none; border: none; padding: 6px 14px; font-size: 13px; font-weight: 500; cursor: pointer; border-radius: 6px; color: var(--color-text-light); transition: color 0.25s ease, background 0.25s ease; font-family: var(--font-en); }
+    .lang-toggle button.active { background: var(--color-white); color: var(--color-text); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .btn-header { display: inline-block; background: var(--color-dark); color: var(--color-white) !important; padding: 10px 22px; border-radius: 6px; font-size: 14px; font-weight: 500; transition: background 0.2s ease; text-decoration: none; }
+    .btn-header:hover { background: var(--color-accent); }
+    .menu-toggle { display: none; background: none; border: none; cursor: pointer; width: 32px; height: 32px; flex-direction: column; justify-content: center; gap: 6px; }
+    .menu-toggle span { display: block; width: 24px; height: 2px; background: var(--color-text); border-radius: 1px; }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      margin-top: var(--header-height);
+      padding: 80px 40px 40px;
+      max-width: var(--max-width);
+      margin-left: auto; margin-right: auto;
+      text-align: center;
+    }
+    .page-hero-label { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 2.5px; color: var(--color-accent); margin-bottom: 16px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease 0.1s forwards; }
+    .page-hero h1 { font-family: var(--font-body); font-size: clamp(32px, 4.5vw, 52px); font-weight: 700; color: var(--color-text); letter-spacing: -0.5px; margin-bottom: 16px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease 0.2s forwards; }
+    .page-hero p { font-size: 17px; color: var(--color-text-light); line-height: 1.7; max-width: 480px; margin: 0 auto; opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease 0.35s forwards; }
+
+    /* ─── BRAND TABS ─── */
+    .brand-tabs {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px 40px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .brand-tab {
+      padding: 14px 32px;
+      border-radius: 10px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text-light);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-tab:hover {
+      border-color: var(--color-text-light);
+      color: var(--color-text);
+    }
+
+    .brand-tab.active {
+      background: var(--color-dark);
+      border-color: var(--color-dark);
+      color: var(--color-white);
+    }
+
+    .brand-tab .count {
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(0,0,0,0.08);
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    .brand-tab.active .count {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* ─── STORE FINDER LAYOUT ─── */
+    .store-finder {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px 100px;
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 0;
+      min-height: 600px;
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--color-white);
+    }
+
+    /* ─── STORE LIST (left panel) ─── */
+    .store-list-panel {
+      border-right: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .store-search {
+      padding: 20px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .store-search input {
+      width: 100%;
+      padding: 12px 16px 12px 42px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-text);
+      background: var(--color-bg);
+      outline: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='11' cy='11' r='7' stroke='%236B6B6B' stroke-width='2'/%3E%3Cpath d='M16 16L20 20' stroke='%236B6B6B' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 14px center;
+      transition: border-color 0.2s ease;
+    }
+
+    .store-search input:focus {
+      border-color: var(--color-accent);
+    }
+
+    .store-search input::placeholder { color: #B0AEA6; }
+
+    .store-list-header {
+      padding: 16px 20px;
+      font-size: 13px;
+      color: var(--color-text-light);
+      border-bottom: 1px solid var(--color-border);
+      font-weight: 500;
+    }
+
+    .store-list-header span {
+      color: var(--color-accent);
+      font-weight: 600;
+    }
+
+    .store-list {
+      flex: 1;
+      overflow-y: auto;
+      max-height: 500px;
+    }
+
+    .store-card {
+      padding: 20px;
+      border-bottom: 1px solid var(--color-border);
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .store-card:hover {
+      background: #F8F7F4;
+    }
+
+    .store-card.active {
+      background: #F3F1EC;
+      border-left: 3px solid var(--color-accent);
+      padding-left: 17px;
+    }
+
+    .store-card-brand {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+    }
+
+    .store-card-brand.oiso { color: #5C3829; }
+    .store-card-brand.mimi { color: #2E4A2E; }
+    .store-card-brand.neulbom { color: #4A3560; }
+
+    .store-card h4 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 6px;
+    }
+
+    .store-card-address {
+      font-size: 13px;
+      color: var(--color-text-light);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .store-card-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--color-text-light);
+    }
+
+    .store-card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .store-status {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+    }
+    .store-status.open { background: #E8F5E9; color: #2E7D32; }
+    .store-status.closed { background: #FFF3E0; color: #E65100; }
+
+    /* ─── MAP (right panel) ─── */
+    .map-panel {
+      background: #E8E6E0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-light);
+      font-size: 15px;
+      position: relative;
+    }
+
+    .map-panel-inner {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .map-panel-inner p {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer { background: var(--color-dark); color: rgba(255,255,255,0.6); padding: 60px 40px; }
+    .footer-inner { max-width: var(--max-width); margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; }
+    .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 300px; }
+    .footer-links { display: flex; gap: 60px; }
+    .footer-col h5 { color: var(--color-white); font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; transition: color 0.2s ease; }
+    .footer-col a:hover { color: var(--color-white); }
+    .footer-contact { text-align: right; }
+    .footer-contact .phone { font-family: var(--font-en); font-size: 24px; color: var(--color-white); margin-bottom: 4px; }
+    .footer-contact .phone-label { font-size: 13px; margin-bottom: 16px; }
+    .footer-contact .email { font-size: 14px; color: rgba(255,255,255,0.5); }
+    .footer-bottom { max-width: var(--max-width); margin: 40px auto 0; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .footer-bottom-links { display: flex; gap: 24px; list-style: none; }
+    .footer-bottom-links a { text-decoration: none; font-size: 13px; color: rgba(255,255,255,0.35); }
+    .footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .nav-links, .nav-right { display: none; }
+      .menu-toggle { display: flex; }
+      .header-inner { padding: 0 24px; }
+      .page-hero { padding: 60px 24px 32px; }
+      .brand-tabs { padding: 0 24px 32px; flex-wrap: wrap; }
+      .brand-tab { padding: 12px 20px; font-size: 14px; }
+      .store-finder {
+        grid-template-columns: 1fr;
+        margin: 0 24px 60px;
+        padding: 0;
+        min-height: auto;
+      }
+      .store-list-panel { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .store-list { max-height: 400px; }
+      .map-panel { min-height: 300px; }
+      .footer { padding: 48px 24px; }
+      .footer-inner { flex-direction: column; }
+      .footer-links { flex-direction: column; gap: 32px; }
+      .footer-contact { text-align: left; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="K Food Solution" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" data-en="Brands" data-ko="브랜드">Brands</a></li>
+        <li><a href="#" data-en="About" data-ko="소개">About</a></li>
+        <li><a href="locations.html" class="active" data-en="Locations" data-ko="매장">Locations</a></li>
+        <li><a href="contact.html" data-en="Contact" data-ko="문의">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="lang-toggle" id="langToggle">
+          <button class="active" data-lang="en">EN</button>
+          <button data-lang="ko">한국어</button>
+        </div>
+        <a href="inquiry.html" class="btn-header" data-en="Inquiry" data-ko="문의하기">Inquiry</a>
+      </div>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- ═══ PAGE HERO ═══ -->
+  <section class="page-hero">
+    <p class="page-hero-label" data-en="Find a Location" data-ko="매장 찾기">Find a Location</p>
+    <h1 data-en="Our Restaurants" data-ko="매장 안내">Our Restaurants</h1>
+    <p data-en="Find a K Food Solution restaurant near you. Select a brand to view all locations." data-ko="가까운 K Food Solution 매장을 찾아보세요. 브랜드를 선택하면 모든 매장을 확인할 수 있습니다.">Find a K Food Solution restaurant near you. Select a brand to view all locations.</p>
+  </section>
+
+  <!-- ═══ BRAND TABS ═══ -->
+  <div class="brand-tabs">
+    <button class="brand-tab active" data-brand="all">
+      <span data-en="All Brands" data-ko="전체">All Brands</span>
+      <span class="count" id="countAll">8</span>
+    </button>
+    <button class="brand-tab" data-brand="oiso">
+      <span>Oiso</span>
+      <span class="count" id="countOiso">3</span>
+    </button>
+    <button class="brand-tab" data-brand="mimi">
+      <span>Mimi Guksu</span>
+      <span class="count" id="countMimi">3</span>
+    </button>
+    <button class="brand-tab" data-brand="neulbom">
+      <span>Neulbom Garden</span>
+      <span class="count" id="countNeulbom">2</span>
+    </button>
+  </div>
+
+  <!-- ═══ STORE FINDER ═══ -->
+  <div class="store-finder">
+
+    <!-- LEFT: Store List -->
+    <div class="store-list-panel">
+      <div class="store-search">
+        <input type="text" id="searchInput" placeholder="Search by name or area..." data-en-placeholder="Search by name or area..." data-ko-placeholder="매장명 또는 지역 검색...">
+      </div>
+      <div class="store-list-header">
+        <span id="resultCount">8</span> <span id="resultLabel" data-en="locations found" data-ko="개 매장">locations found</span>
+      </div>
+
+      <div class="store-list" id="storeList">
+
+        <!-- Oiso Locations -->
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — Sunway University</h4>
+          <p class="store-card-address" data-en="Lot G-12, Sunway University Mall<br>Bandar Sunway, Selangor" data-ko="셀랑고르 반다르 선웨이<br>선웨이 대학교 몰 G-12">Lot G-12, Sunway University Mall<br>Bandar Sunway, Selangor</p>
+          <div class="store-card-meta">
+            <span>📞 +60 3-7492-0001</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — Taylor's Lakeside</h4>
+          <p class="store-card-address" data-en="Block C, Taylor's Lakeside Campus<br>Subang Jaya, Selangor" data-ko="셀랑고르 수방자야<br>테일러스 레이크사이드 캠퍼스 C동">Block C, Taylor's Lakeside Campus<br>Subang Jaya, Selangor</p>
+          <div class="store-card-meta">
+            <span>📞 +60 3-5632-0002</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — INTI Nilai</h4>
+          <p class="store-card-address" data-en="Food Court Level 1, INTI International<br>Nilai, Negeri Sembilan" data-ko="느그리 슴빌란 닐라이<br>INTI 인터내셔널 1층 푸드코트">Food Court Level 1, INTI International<br>Nilai, Negeri Sembilan</p>
+          <div class="store-card-meta">
+            <span>📞 +60 6-7987-0003</span>
+            <span>🕐 11AM – 9PM</span>
+          </div>
+          <span class="store-status closed" data-en="Closed" data-ko="영업 종료">Closed</span>
+        </div>
+
+        <!-- Mimi Guksu Locations -->
+        <div class="store-card" data-brand="mimi">
+          <div class="store-card-brand mimi">Mimi Guksu</div>
+          <h4>Mimi Guksu — APU</h4>
+          <p class="store-card-address" data-en="Jalan Teknologi 5, TPM<br>Bukit Jalil, Kuala Lumpur" data-ko="쿠알라룸푸르 부킷잘릴<br>잘란 테크놀로지 5, TPM">Jalan Teknologi 5, TPM<br>Bukit Jalil, Kuala Lumpur</p>
+          <div class="store-card-meta">
+            <span>📞 +60 3-8996-0004</span>
+            <span>🕐 10AM – 9PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="mimi">
+          <div class="store-card-brand mimi">Mimi Guksu</div>
+          <h4>Mimi Guksu — Sunway Pyramid</h4>
+          <p class="store-card-address" data-en="Lot F1-032, Sunway Pyramid Mall<br>Bandar Sunway, Selangor" data-ko="셀랑고르 반다르 선웨이<br>선웨이 피라미드 몰 F1-032">Lot F1-032, Sunway Pyramid Mall<br>Bandar Sunway, Selangor</p>
+          <div class="store-card-meta">
+            <span>📞 +60 3-7492-0005</span>
+            <span>🕐 10AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="mimi">
+          <div class="store-card-brand mimi">Mimi Guksu</div>
+          <h4>Mimi Guksu — UCSI KL</h4>
+          <p class="store-card-address" data-en="No. 1, Jalan Menara Gading<br>Cheras, Kuala Lumpur" data-ko="쿠알라룸푸르 체라스<br>잘란 므나라 가딩 1번지">No. 1, Jalan Menara Gading<br>Cheras, Kuala Lumpur</p>
+          <div class="store-card-meta">
+            <span>📞 +60 3-9101-0006</span>
+            <span>🕐 10AM – 9PM</span>
+          </div>
+          <span class="store-status closed" data-en="Closed" data-ko="영업 종료">Closed</span>
+        </div>
+
+        <!-- Neulbom Garden Locations -->
+        <div class="store-card" data-brand="neulbom">
+          <div class="store-card-brand neulbom">Neulbom Garden</div>
+          <h4>Neulbom Garden — Bangsar South</h4>
+          <p class="store-card-address" data-en="Unit 3A-1, The Vertical<br>Bangsar South, Kuala Lumpur" data-ko="쿠알라룸푸르 방사르 사우스<br>더 버티컬 3A-1">Unit 3A-1, The Vertical<br>Bangsar South, Kuala Lumpur</p>
+          <div class="store-card-meta">
+            <span>📞 +60 3-2242-0007</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="neulbom">
+          <div class="store-card-brand neulbom">Neulbom Garden</div>
+          <h4>Neulbom Garden — Mont Kiara</h4>
+          <p class="store-card-address" data-en="Lot G-08, 1 Mont Kiara Mall<br>Mont Kiara, Kuala Lumpur" data-ko="쿠알라룸푸르 몬키아라<br>1 몬키아라 몰 G-08">Lot G-08, 1 Mont Kiara Mall<br>Mont Kiara, Kuala Lumpur</p>
+          <div class="store-card-meta">
+            <span>📞 +60 3-6211-0008</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT: Map -->
+    <div class="map-panel">
+      <div class="map-panel-inner">
+        <span style="font-size: 32px;">📍</span><br><br>
+        <span data-en="Google Maps embed area" data-ko="구글 맵 영역">Google Maps embed area</span>
+        <p data-en="Embed your Google Map here to show store pins" data-ko="매장 위치 핀을 표시할 구글 맵을 삽입하세요">Embed your Google Map here to show store pins</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="K Food Solution" class="logo-img" style="margin-bottom: 16px; filter: brightness(0) invert(1);">
+        <p data-en="Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition." data-ko="혁신과 품질, 그리고 전통에 대한 깊은 존경으로 한국 최고의 음식 문화를 전합니다.">Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5 data-en="Company" data-ko="회사">Company</h5>
+          <ul>
+            <li><a href="#" data-en="About Us" data-ko="회사 소개">About Us</a></li>
+            <li><a href="index.html" data-en="Our Brands" data-ko="브랜드">Our Brands</a></li>
+            <li><a href="#" data-en="Careers" data-ko="채용">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-en="Support" data-ko="고객지원">Support</h5>
+          <ul>
+            <li><a href="contact.html" data-en="Contact" data-ko="문의">Contact</a></li>
+            <li><a href="locations.html" data-en="Locations" data-ko="매장 안내">Locations</a></li>
+            <li><a href="#" data-en="FAQ" data-ko="자주 묻는 질문">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <div class="phone">+60 3-0000-0000</div>
+        <div class="phone-label" data-en="General Inquiry" data-ko="대표 전화">General Inquiry</div>
+        <div class="email">info@kfoodsolution.com</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 K Food Solution. All rights reserved.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="#" data-en="Privacy Policy" data-ko="개인정보처리방침">Privacy Policy</a></li>
+        <li><a href="#" data-en="Terms of Service" data-ko="이용약관">Terms of Service</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // ─── LANGUAGE TOGGLE ───
+    const langToggle = document.getElementById('langToggle');
+    const langButtons = langToggle.querySelectorAll('button');
+    let currentLang = 'en';
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        if (lang === currentLang) return;
+        currentLang = lang;
+        langButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-en][data-ko]').forEach(el => {
+          el.innerHTML = el.dataset[lang];
+        });
+        // Update search placeholder
+        const search = document.getElementById('searchInput');
+        search.placeholder = lang === 'ko' ? search.dataset.koPlaceholder : search.dataset.enPlaceholder;
+      });
+    });
+
+    // ─── BRAND TAB FILTERING ───
+    const brandTabs = document.querySelectorAll('.brand-tab');
+    const storeCards = document.querySelectorAll('.store-card');
+    const resultCount = document.getElementById('resultCount');
+
+    function filterStores(brand) {
+      let count = 0;
+      storeCards.forEach(card => {
+        const match = brand === 'all' || card.dataset.brand === brand;
+        const searchMatch = card.style.display !== 'search-hidden';
+        card.style.display = match ? '' : 'none';
+        if (match) count++;
+      });
+      resultCount.textContent = count;
+
+      // Re-apply search filter
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      if (query) searchStores(query);
+    }
+
+    brandTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        brandTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        filterStores(tab.dataset.brand);
+      });
+    });
+
+    // ─── SEARCH ───
+    const searchInput = document.getElementById('searchInput');
+
+    function searchStores(query) {
+      const activeBrand = document.querySelector('.brand-tab.active').dataset.brand;
+      let count = 0;
+
+      storeCards.forEach(card => {
+        const brandMatch = activeBrand === 'all' || card.dataset.brand === activeBrand;
+        const text = card.textContent.toLowerCase();
+        const searchMatch = text.includes(query);
+        const show = brandMatch && searchMatch;
+        card.style.display = show ? '' : 'none';
+        if (show) count++;
+      });
+
+      resultCount.textContent = count;
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      searchStores(e.target.value.toLowerCase());
+    });
+
+    // ─── STORE CARD CLICK (highlight) ───
+    storeCards.forEach(card => {
+      card.addEventListener('click', () => {
+        storeCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
