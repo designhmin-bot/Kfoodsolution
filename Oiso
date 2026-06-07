@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neulbom Garden — K Food Solution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --color-bg: #FAFAF7;
+      --color-text: #1A1A1A;
+      --color-text-light: #6B6B6B;
+      --color-accent: #C8102E;
+      --color-accent-warm: #E8A87C;
+      --color-white: #FFFFFF;
+      --color-dark: #111111;
+      --color-border: #E0DDD6;
+      --font-en: 'Google Sans', 'Google Sans Display', 'Product Sans', sans-serif;
+      --font-kr: 'Noto Sans KR', sans-serif;
+      --font-body: var(--font-en);
+      --max-width: 1280px;
+      --header-height: 80px;
+      --brand-color: #4A3560;
+      --brand-color-rgb: 74, 53, 96;
+      --brand-gradient: linear-gradient(160deg, #2D1F3D 0%, #4A3560 40%, #1A1425 100%);
+    }
+
+    html[lang="ko"] { --font-body: var(--font-kr); }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      background: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--header-height);
+      background: rgba(250, 250, 247, 0.95);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: var(--max-width); margin: 0 auto;
+      padding: 0 40px; height: 100%;
+      display: flex; align-items: center;
+      justify-content: space-between; position: relative;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--color-text); }
+    .logo-img { height: 40px; width: auto; display: block; }
+    .nav-links {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none; color: var(--color-text);
+      font-size: 15px; font-weight: 400; position: relative; padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 1.5px; background: var(--color-accent); transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-right a { text-decoration: none; font-size: 14px; color: var(--color-text-light); }
+    .lang-toggle {
+      display: flex; align-items: center; background: #EEEEE9;
+      border-radius: 8px; padding: 3px; cursor: pointer; user-select: none;
+    }
+    .lang-toggle button {
+      background: none; border: none; padding: 6px 14px;
+      font-size: 13px; font-weight: 500; cursor: pointer; border-radius: 6px;
+      color: var(--color-text-light); transition: color 0.25s ease, background 0.25s ease;
+      font-family: var(--font-en);
+    }
+    .lang-toggle button.active {
+      background: var(--color-white); color: var(--color-text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .btn-inquiry {
+      display: inline-block; background: var(--color-dark);
+      color: var(--color-white) !important; padding: 10px 22px;
+      border-radius: 6px; font-size: 14px; font-weight: 500;
+      transition: background 0.2s ease; text-decoration: none;
+    }
+    .btn-inquiry:hover { background: var(--color-accent); }
+    .menu-toggle {
+      display: none; background: none; border: none; cursor: pointer;
+      width: 32px; height: 32px; flex-direction: column; justify-content: center; gap: 6px;
+    }
+    .menu-toggle span { display: block; width: 24px; height: 2px; background: var(--color-text); border-radius: 1px; }
+
+    /* ─── BRAND HERO ─── */
+    .brand-hero {
+      margin-top: var(--header-height);
+      position: relative; height: 520px; overflow: hidden;
+    }
+    .brand-hero-bg {
+      position: absolute; inset: 0; background: var(--brand-gradient);
+    }
+    .brand-hero-bg::before {
+      content: ''; position: absolute;
+      width: 400px; height: 400px; border-radius: 50%;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .brand-hero-content {
+      position: relative; z-index: 2;
+      max-width: var(--max-width); margin: 0 auto;
+      padding: 0 40px; height: 100%;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .brand-hero-label {
+      font-size: 13px; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 3px; color: rgba(255,255,255,0.45);
+      margin-bottom: 20px; opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.7s ease 0.1s forwards;
+    }
+    .brand-hero h1 {
+      font-family: var(--font-en);
+      font-size: clamp(42px, 6vw, 72px); font-weight: 700;
+      color: var(--color-white); letter-spacing: -1px; margin-bottom: 16px;
+      opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+    .brand-hero-tagline {
+      font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.65);
+      line-height: 1.6; max-width: 480px;
+      opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease 0.35s forwards;
+    }
+
+    /* ─── SUB NAV ─── */
+    .brand-subnav {
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-bg);
+      position: sticky; top: var(--header-height); z-index: 50;
+    }
+    .brand-subnav-inner {
+      max-width: var(--max-width); margin: 0 auto;
+      padding: 0 40px; display: flex; gap: 32px;
+    }
+    .brand-subnav a {
+      text-decoration: none; font-size: 14px; font-weight: 400;
+      color: var(--color-text-light); padding: 16px 0;
+      border-bottom: 2px solid transparent; transition: all 0.2s ease;
+    }
+    .brand-subnav a:hover, .brand-subnav a.active {
+      color: var(--color-text); border-bottom-color: var(--color-accent);
+    }
+
+    /* ─── SECTION COMMON ─── */
+    .section {
+      max-width: var(--max-width); margin: 0 auto; padding: 80px 40px;
+    }
+    .section-label {
+      font-size: 13px; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 2.5px; color: var(--color-accent); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-body);
+      font-size: clamp(24px, 3vw, 36px); font-weight: 700;
+      color: var(--color-text); margin-bottom: 20px;
+    }
+    .section-desc {
+      font-size: 16px; color: var(--color-text-light);
+      line-height: 1.8; max-width: 600px;
+    }
+
+    /* ═══════════════════════════════════════
+       BRAND STORY — FULL-BLEED SCROLL BANNERS
+       ═══════════════════════════════════════ */
+    .story-banner {
+      position: relative;
+      width: 100%;
+      min-height: 75vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .story-banner-bg {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.3s ease;
+    }
+
+    /* Gradient backgrounds as image placeholders */
+    .story-banner:nth-child(1) .story-banner-bg {
+      background: linear-gradient(135deg, #2D1F3D 0%, #4A3560 50%, #2D1F3D 100%);
+    }
+    .story-banner:nth-child(2) .story-banner-bg {
+      background: linear-gradient(135deg, #1A1425 0%, #2D1F3D 50%, #1A1425 100%);
+    }
+    .story-banner:nth-child(3) .story-banner-bg {
+      background: linear-gradient(135deg, #4A3560 0%, #1A1425 50%, #1A1A1A 100%);
+    }
+
+    .story-banner-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      z-index: 1;
+    }
+
+    .story-banner-content {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max-width);
+      width: 100%;
+      padding: 80px 40px;
+    }
+
+    /* Parallax background */
+    .story-banner-bg {
+      will-change: transform;
+      transform: scale(1.15);
+    }
+
+    /* Decorative line that expands */
+    .story-banner-content::before {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: var(--color-accent);
+      margin-bottom: 28px;
+      transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
+    }
+    .story-banner-content.visible::before {
+      width: 60px;
+    }
+    .story-banner:nth-child(even) .story-banner-content::before {
+      margin-left: auto;
+    }
+
+    .story-banner-content .story-label {
+      font-size: 12px; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 3px; color: rgba(255,255,255,0.4);
+      margin-bottom: 24px;
+      opacity: 0; transform: translateY(50px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
+                  transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+    }
+
+    .story-banner-content h2 {
+      font-family: var(--font-body);
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 700;
+      color: var(--color-white);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      max-width: 700px;
+      margin-bottom: 24px;
+      opacity: 0; transform: translateY(60px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s,
+                  transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+    }
+
+    .story-banner-content p {
+      font-size: clamp(15px, 1.6vw, 18px);
+      color: rgba(255,255,255,0.7);
+      line-height: 1.8;
+      max-width: 520px;
+      opacity: 0; transform: translateY(60px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s,
+                  transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
+    }
+
+    .story-banner-content.visible .story-label,
+    .story-banner-content.visible h2,
+    .story-banner-content.visible p {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* Alternate layout: right-aligned text on even banners */
+    .story-banner:nth-child(even) .story-banner-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    /* Decorative circles on banners */
+    .story-banner-bg::before {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.06);
+      top: 50%; right: 10%;
+      transform: translateY(-50%) scale(0.8);
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s,
+                  opacity 1.2s ease 0.3s;
+      opacity: 0;
+    }
+    .story-banner-bg::after {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.04);
+      top: 50%; right: 10%;
+      transform: translateY(-50%) scale(0.8);
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s,
+                  opacity 1.2s ease 0.5s;
+      opacity: 0;
+    }
+    .story-banner.revealed .story-banner-bg::before,
+    .story-banner.revealed .story-banner-bg::after {
+      transform: translateY(-50%) scale(1);
+      opacity: 1;
+    }
+    .story-banner:nth-child(even) .story-banner-bg::before,
+    .story-banner:nth-child(even) .story-banner-bg::after {
+      right: auto; left: 10%;
+    }
+
+    /* ═══════════════════════════════════════
+       VALUES — HOVER REVEAL IMAGE CARDS
+       ═══════════════════════════════════════ */
+    .values-section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 100px 40px;
+    }
+
+    .values-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .value-card {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .value-card-bg {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .value-card:hover .value-card-bg {
+      transform: scale(1.08);
+    }
+
+    /* Gradient bg placeholders — replace with images */
+    .value-card:nth-child(1) .value-card-bg {
+      background: linear-gradient(180deg, #4A3560 0%, #2D1F3D 100%);
+    }
+    .value-card:nth-child(2) .value-card-bg {
+      background: linear-gradient(180deg, #3D2B50 0%, #1A1425 100%);
+    }
+    .value-card:nth-child(3) .value-card-bg {
+      background: linear-gradient(180deg, #5A4570 0%, #2D1F3D 100%);
+    }
+
+    /* Color overlay on hover */
+    .value-card-overlay {
+      position: absolute; inset: 0;
+      background: rgba(var(--brand-color-rgb), 0.0);
+      transition: background 0.5s ease;
+      z-index: 1;
+    }
+
+    .value-card:hover .value-card-overlay {
+      background: rgba(var(--brand-color-rgb), 0.75);
+    }
+
+    /* Bottom label always visible */
+    .value-card-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 24px 28px;
+      z-index: 3;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+      transition: opacity 0.4s ease;
+    }
+
+    .value-card:hover .value-card-label {
+      opacity: 0;
+    }
+
+    .value-card-label h4 {
+      font-size: 20px; font-weight: 700;
+      color: var(--color-white);
+    }
+
+    .value-card-label span {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    /* Full text revealed on hover */
+    .value-card-reveal {
+      position: absolute; inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 36px 32px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .value-card:hover .value-card-reveal {
+      opacity: 1;
+    }
+
+    .value-card-reveal h4 {
+      font-size: 22px; font-weight: 700;
+      color: var(--color-white);
+      margin-bottom: 16px;
+    }
+
+    .value-card-reveal p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+    }
+
+    /* ─── MENU SECTION ─── */
+    .menu-section { background: var(--color-white); }
+    .menu-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 28px; margin-top: 48px;
+    }
+    .menu-item {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--color-border); background: var(--color-bg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .menu-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    }
+    .menu-item-image {
+      aspect-ratio: 4 / 3; background: var(--brand-gradient);
+      position: relative; overflow: hidden;
+    }
+    .menu-item-image::after {
+      content: ''; position: absolute;
+      width: 80px; height: 80px; border-radius: 50%;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .menu-item-info { padding: 24px; }
+    .menu-item-info h4 { font-size: 17px; font-weight: 600; margin-bottom: 6px; color: var(--color-text); }
+    .menu-item-info p { font-size: 14px; color: var(--color-text-light); line-height: 1.5; }
+    .menu-item-info .price {
+      display: inline-block; margin-top: 12px;
+      font-size: 15px; font-weight: 600; color: var(--color-accent);
+    }
+    .menu-cta { text-align: center; margin-top: 48px; }
+    .btn-outline {
+      display: inline-block; padding: 14px 36px;
+      border: 1.5px solid var(--color-dark); border-radius: 8px;
+      font-size: 15px; font-weight: 500; color: var(--color-text);
+      text-decoration: none; transition: all 0.2s ease;
+    }
+    .btn-outline:hover { background: var(--color-dark); color: var(--color-white); }
+
+    /* ─── INFO SECTION ─── */
+    .info-section { border-top: 1px solid var(--color-border); }
+    .info-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; margin-top: 48px;
+    }
+    .info-card {
+      padding: 40px; border-radius: 14px;
+      background: var(--color-white); border: 1px solid var(--color-border);
+    }
+    .info-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: var(--color-text); }
+    .info-card-row {
+      display: flex; justify-content: space-between;
+      padding: 12px 0; border-bottom: 1px solid var(--color-border); font-size: 14px;
+    }
+    .info-card-row:last-child { border-bottom: none; }
+    .info-card-row .label { color: var(--color-text-light); }
+    .info-card-row .value { color: var(--color-text); font-weight: 500; text-align: right; }
+    .info-map-placeholder {
+      aspect-ratio: 16 / 9; border-radius: 14px; background: #E8E6E0;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-text-light); font-size: 15px;
+    }
+
+    /* ─── CTA BANNER ─── */
+    .cta-banner {
+      background: var(--brand-gradient); padding: 80px 40px; text-align: center;
+    }
+    .cta-banner h3 {
+      font-family: var(--font-body);
+      font-size: clamp(24px, 3vw, 36px); font-weight: 700;
+      color: var(--color-white); margin-bottom: 16px;
+    }
+    .cta-banner p {
+      font-size: 16px; color: rgba(255,255,255,0.6); margin-bottom: 32px;
+      max-width: 460px; margin-left: auto; margin-right: auto; line-height: 1.6;
+    }
+    .btn-white {
+      display: inline-block; padding: 14px 36px;
+      background: var(--color-white); border-radius: 8px;
+      font-size: 15px; font-weight: 600; color: var(--color-dark);
+      text-decoration: none; transition: transform 0.2s ease;
+    }
+    .btn-white:hover { transform: translateY(-2px); }
+
+    /* ─── FOOTER ─── */
+    .footer { background: var(--color-dark); color: rgba(255,255,255,0.6); padding: 60px 40px; }
+    .footer-inner {
+      max-width: var(--max-width); margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px;
+    }
+    .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 300px; }
+    .footer-links { display: flex; gap: 60px; }
+    .footer-col h5 { color: var(--color-white); font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; transition: color 0.2s ease; }
+    .footer-col a:hover { color: var(--color-white); }
+    .footer-contact { text-align: right; }
+    .footer-contact .phone { font-family: var(--font-en); font-size: 24px; color: var(--color-white); margin-bottom: 4px; }
+    .footer-contact .phone-label { font-size: 13px; margin-bottom: 16px; }
+    .footer-contact .email { font-size: 14px; color: rgba(255,255,255,0.5); }
+    .footer-bottom {
+      max-width: var(--max-width); margin: 40px auto 0; padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .footer-bottom-links { display: flex; gap: 24px; list-style: none; }
+    .footer-bottom-links a { text-decoration: none; font-size: 13px; color: rgba(255,255,255,0.35); }
+    .footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .nav-links, .nav-right { display: none; }
+      .menu-toggle { display: flex; }
+      .header-inner { padding: 0 24px; }
+      .brand-hero { height: 400px; }
+      .brand-hero-content { padding: 0 24px; }
+      .brand-subnav-inner { padding: 0 24px; gap: 20px; overflow-x: auto; }
+      .brand-subnav a { white-space: nowrap; }
+      .section { padding: 60px 24px; }
+      .story-banner { min-height: 60vh; }
+      .story-banner-content { padding: 60px 24px; }
+      .story-banner:nth-child(even) .story-banner-content {
+        align-items: flex-start; text-align: left;
+      }
+      .values-section { padding: 60px 24px; }
+      .values-grid { grid-template-columns: 1fr; gap: 20px; }
+      .value-card { aspect-ratio: 16 / 10; }
+      /* Touch: always show reveal on mobile */
+      .value-card-overlay { background: rgba(var(--brand-color-rgb), 0.65) !important; }
+      .value-card-label { opacity: 0 !important; }
+      .value-card-reveal { opacity: 1 !important; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .info-grid { grid-template-columns: 1fr; gap: 24px; }
+      .cta-banner { padding: 60px 24px; }
+      .footer { padding: 48px 24px; }
+      .footer-inner { flex-direction: column; }
+      .footer-links { flex-direction: column; gap: 32px; }
+      .footer-contact { text-align: left; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="K Food Solution" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" data-en="Brands" data-ko="브랜드">Brands</a></li>
+        <li><a href="#" data-en="About" data-ko="소개">About</a></li>
+        <li><a href="#" data-en="Locations" data-ko="매장">Locations</a></li>
+        <li><a href="#" data-en="Contact" data-ko="문의">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="lang-toggle" id="langToggle">
+          <button class="active" data-lang="en">EN</button>
+          <button data-lang="ko">한국어</button>
+        </div>
+        <a href="#" class="btn-inquiry" data-en="Inquiry" data-ko="문의하기">Inquiry</a>
+      </div>
+      <button class="menu-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══ BRAND HERO ═══ -->
+  <section class="brand-hero">
+    <div class="brand-hero-bg"></div>
+    <div class="brand-hero-content">
+      <p class="brand-hero-label" data-en="K Food Solution — Brand" data-ko="K Food Solution — 브랜드">K Food Solution — Brand</p>
+      <h1>Neulbom Garden</h1>
+      <p class="brand-hero-tagline" data-en="Farm-to-table Korean homestyle dining with seasonal ingredients and a garden-fresh philosophy." data-ko="제철 식재료와 산지 직송 철학이 담긴 한국 가정식.">Farm-to-table Korean homestyle dining with seasonal ingredients and a garden-fresh philosophy.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SUB NAV ═══ -->
+  <nav class="brand-subnav">
+    <div class="brand-subnav-inner">
+      <a href="#story" class="active" data-en="Brand Story" data-ko="브랜드 스토리">Brand Story</a>
+      <a href="#menu" data-en="Menu" data-ko="메뉴">Menu</a>
+      <a href="#info" data-en="Location & Hours" data-ko="매장 안내">Location & Hours</a>
+    </div>
+  </nav>
+
+  <!-- ═══ BRAND STORY — FULL SCROLL BANNERS ═══ -->
+  <div id="story">
+
+    <!-- Banner 1 -->
+    <section class="story-banner">
+      <div class="story-banner-bg"></div>
+      <div class="story-banner-overlay"></div>
+      <div class="story-banner-content">
+        <span class="story-label" data-en="Our Beginning" data-ko="시작">Our Beginning</span>
+        <h2 data-en="Rooted in the seasons" data-ko="계절에 뿌리를 두다">Rooted in the seasons</h2>
+        <p data-en="Neulbom Garden draws from the Korean grandmother's kitchen — where nothing is wasted, everything is seasonal, and every meal is made with quiet devotion." data-ko="할머니의 부엌에서 영감을 받은 Neulbom Garden. 버리는 것 없이, 제철 재료로, 조용한 정성을 담아 만드는 밥상.">Neulbom Garden draws from the Korean grandmother's kitchen — where nothing is wasted, everything is seasonal, and every meal is made with quiet devotion.</p>
+      </div>
+    </section>
+
+    <!-- Banner 2 -->
+    <section class="story-banner">
+      <div class="story-banner-bg"></div>
+      <div class="story-banner-overlay"></div>
+      <div class="story-banner-content">
+        <span class="story-label" data-en="Our Philosophy" data-ko="철학">Our Philosophy</span>
+        <h2 data-en="We cook what the earth gives us. Each season brings a new table." data-ko="자연이 주는 것을 요리합니다. 계절마다 새로운 밥상.">We cook what the earth gives us. Each season brings a new table.</h2>
+        <p data-en="Our menu changes with the seasons. We work directly with local farms, selecting vegetables at their peak and preparing each ingredient to draw out its natural character." data-ko="계절에 따라 변하는 메뉴. 지역 농가와 직접 소통하며 가장 좋은 상태의 채소를 선별하고, 재료 본연의 맛을 끌어냅니다.">Our menu changes with the seasons. We work directly with local farms, selecting vegetables at their peak and preparing each ingredient to draw out its natural character.</p>
+      </div>
+    </section>
+
+    <!-- Banner 3 -->
+    <section class="story-banner">
+      <div class="story-banner-bg"></div>
+      <div class="story-banner-overlay"></div>
+      <div class="story-banner-content">
+        <span class="story-label" data-en="Our Experience" data-ko="경험">Our Experience</span>
+        <h2 data-en="A table that feels like home." data-ko="집처럼 편안한 밥상.">A table that feels like home.</h2>
+        <p data-en="At Neulbom Garden, the dining room feels like stepping into a Korean home. Warm wood, soft linen, handmade ceramics, and a table full of dishes made with the care you remember." data-ko="Neulbom Garden의 공간은 한국의 집에 들어온 듯합니다. 따뜻한 나무, 린넨, 수제 도자기, 그리고 기억 속 정성이 가득한 밥상.">At Neulbom Garden, the dining room feels like stepping into a Korean home. Warm wood, soft linen, handmade ceramics, and a table full of dishes made with the care you remember.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ═══ VALUES — HOVER REVEAL CARDS ═══ -->
+  <section class="values-section">
+    <div class="values-header">
+      <p class="section-label" data-en="What Sets Us Apart" data-ko="우리만의 차별점">What Sets Us Apart</p>
+      <h2 class="section-title" data-en="Built on three commitments" data-ko="세 가지 약속 위에 세우다">Built on three commitments</h2>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-card-bg"></div>
+        <div class="value-card-overlay"></div>
+        <div class="value-card-label">
+          <span data-en="01 — Seasons" data-ko="01 — 계절">01 — Seasons</span>
+          <h4 data-en="Seasonal Menu" data-ko="제철 메뉴">Seasonal Menu</h4>
+        </div>
+        <div class="value-card-reveal">
+          <h4 data-en="Seasonal Menu" data-ko="제철 메뉴">Seasonal Menu</h4>
+          <p data-en="Our menu changes with the seasons, featuring ingredients at their absolute peak. Spring greens, summer fruits, autumn roots, winter stews." data-ko="가장 좋은 상태의 재료만을 사용하는 계절별 메뉴. 봄나물, 여름 과일, 가을 뿌리채소, 겨울 찌개.">Our menu changes with the seasons, featuring ingredients at their absolute peak. Spring greens, summer fruits, autumn roots, winter stews.</p>
+        </div>
+      </div>
+
+      <div class="value-card">
+        <div class="value-card-bg"></div>
+        <div class="value-card-overlay"></div>
+        <div class="value-card-label">
+          <span data-en="02 — Farms" data-ko="02 — 농가">02 — Farms</span>
+          <h4 data-en="Local Sourcing" data-ko="로컬 식재료">Local Sourcing</h4>
+        </div>
+        <div class="value-card-reveal">
+          <h4 data-en="Local Sourcing" data-ko="로컬 식재료">Local Sourcing</h4>
+          <p data-en="We partner directly with local farms, bringing the freshest vegetables, herbs, and grains to your table. Every ingredient is traceable and sustainable." data-ko="지역 농가와 직접 파트너십을 맺어 가장 신선한 채소, 허브, 곡물을 식탁에 올립니다.">We partner directly with local farms, bringing the freshest vegetables, herbs, and grains to your table. Every ingredient is traceable and sustainable.</p>
+        </div>
+      </div>
+
+      <div class="value-card">
+        <div class="value-card-bg"></div>
+        <div class="value-card-overlay"></div>
+        <div class="value-card-label">
+          <span data-en="03 — Home" data-ko="03 — 가정">03 — Home</span>
+          <h4 data-en="Homestyle Warmth" data-ko="가정식의 따뜻함">Homestyle Warmth</h4>
+        </div>
+        <div class="value-card-reveal">
+          <h4 data-en="Homestyle Warmth" data-ko="가정식의 따뜻함">Homestyle Warmth</h4>
+          <p data-en="A dining room that feels like home. Warm lighting, wooden tables, handmade ceramics, and the kind of unhurried care that turns a meal into a memory." data-ko="집처럼 편안한 공간. 따뜻한 조명, 나무 테이블, 수제 도자기, 식사를 추억으로 만드는 정성.">A dining room that feels like home. Warm lighting, wooden tables, handmade ceramics, and the kind of unhurried care that turns a meal into a memory.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MENU ═══ -->
+  <section id="menu" class="section menu-section">
+    <p class="section-label" data-en="Signature Menu" data-ko="시그니처 메뉴">Signature Menu</p>
+    <h2 class="section-title" data-en="Our signature selections" data-ko="엄선된 시그니처 메뉴">Our signature selections</h2>
+    <p class="section-desc" data-en="Each dish is crafted to highlight the natural flavors of our carefully sourced ingredients." data-ko="엄선된 식재료 본연의 맛을 살려 정성껏 준비합니다.">Each dish is crafted to highlight the natural flavors of our carefully sourced ingredients.</p>
+    <div class="menu-grid">
+      <div class="menu-item fade-in">
+        <div class="menu-item-image"></div>
+        <div class="menu-item-info">
+          <h4 data-en="Dosirak Set" data-ko="도시락 세트">Dosirak Set</h4>
+          <p data-en="Traditional lunchbox with seasonal banchan, rice, and grilled protein." data-ko="제철 반찬, 밥, 구이를 담은 도시락 세트.">Traditional lunchbox with seasonal banchan, rice, and grilled protein.</p>
+          <span class="price">RM 35</span>
+        </div>
+      </div>
+      <div class="menu-item fade-in">
+        <div class="menu-item-image"></div>
+        <div class="menu-item-info">
+          <h4 data-en="Jeyuk Bokkeum" data-ko="제육볶음">Jeyuk Bokkeum</h4>
+          <p data-en="Spicy stir-fried pork with gochujang, rice, and greens." data-ko="얇게 썬 제육볶음, 특제 소스와 함께.">Spicy stir-fried pork with gochujang, rice, and greens.</p>
+          <span class="price">RM 30</span>
+        </div>
+      </div>
+      <div class="menu-item fade-in">
+        <div class="menu-item-image"></div>
+        <div class="menu-item-info">
+          <h4 data-en="Godeungeo Gui" data-ko="고등어구이">Godeungeo Gui</h4>
+          <p data-en="Salt-grilled mackerel with radish and banchan spread." data-ko="두툼한 고등어구이, 쌈채소와 쌈장 포함.">Salt-grilled mackerel with radish and banchan spread.</p>
+          <span class="price">RM 25</span>
+        </div>
+      </div>
+      <div class="menu-item fade-in">
+        <div class="menu-item-image"></div>
+        <div class="menu-item-info">
+          <h4 data-en="Japchae Bap" data-ko="잡채밥">Japchae Bap</h4>
+          <p data-en="Glass noodle stir-fry over steamed rice with sesame oil." data-ko="제철 채소와 간장 소스로 볶은 잡채밥.">Glass noodle stir-fry over steamed rice with sesame oil.</p>
+          <span class="price">RM 28</span>
+        </div>
+      </div>
+      <div class="menu-item fade-in">
+        <div class="menu-item-image"></div>
+        <div class="menu-item-info">
+          <h4 data-en="Kimchi Jjigae" data-ko="김치찌개">Kimchi Jjigae</h4>
+          <p data-en="Aged kimchi stew with pork belly, tofu, and scallions." data-ko="두부, 애호박, 청양고추를 넣은 김치찌개.">Aged kimchi stew with pork belly, tofu, and scallions.</p>
+          <span class="price">RM 24</span>
+        </div>
+      </div>
+      <div class="menu-item fade-in">
+        <div class="menu-item-image"></div>
+        <div class="menu-item-info">
+          <h4 data-en="Ssambap Set" data-ko="쌈밥 세트">Ssambap Set</h4>
+          <p data-en="Lettuce wrap set with grilled meats, rice, and seasonal pickles." data-ko="돌솥밥에 제철 나물, 계란, 고추장을 곁들인 쌈밥 세트.">Lettuce wrap set with grilled meats, rice, and seasonal pickles.</p>
+          <span class="price">RM 32</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-cta">
+      <a href="#" class="btn-outline" data-en="View Full Menu" data-ko="전체 메뉴 보기">View Full Menu</a>
+    </div>
+  </section>
+
+  <!-- ═══ LOCATION & HOURS ═══ -->
+  <section id="info" class="section info-section">
+    <p class="section-label" data-en="Visit Us" data-ko="매장 안내">Visit Us</p>
+    <h2 class="section-title" data-en="Location & Hours" data-ko="매장 위치 및 영업시간">Location & Hours</h2>
+    <div class="info-grid">
+      <div class="info-card fade-in">
+        <h4 data-en="Hours & Contact" data-ko="영업시간 및 연락처">Hours & Contact</h4>
+        <div class="info-card-row">
+          <span class="label" data-en="Mon — Fri" data-ko="월 — 금">Mon — Fri</span>
+          <span class="value">11:00 AM — 10:00 PM</span>
+        </div>
+        <div class="info-card-row">
+          <span class="label" data-en="Sat — Sun" data-ko="토 — 일">Sat — Sun</span>
+          <span class="value">10:00 AM — 11:00 PM</span>
+        </div>
+        <div class="info-card-row">
+          <span class="label" data-en="Phone" data-ko="전화">Phone</span>
+          <span class="value">+60 3-0000-0000</span>
+        </div>
+        <div class="info-card-row">
+          <span class="label" data-en="Address" data-ko="주소">Address</span>
+          <span class="value" data-en="123 University Ave<br>Campus, Malaysia" data-ko="말레이시아 캠퍼스<br>유니버시티 애비뉴 123">123 University Ave<br>Campus, Malaysia</span>
+        </div>
+      </div>
+      <div class="info-map-placeholder fade-in" data-en="Map placeholder — embed your Google Map here" data-ko="지도 영역 — 구글 맵을 삽입해 주세요">Map placeholder — embed your Google Map here</div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA BANNER ═══ -->
+  <section class="cta-banner">
+    <h3 data-en="Ready to experience Neulbom Garden?" data-ko="Neulbom Garden을 경험할 준비가 되셨나요?">Ready to experience Neulbom Garden?</h3>
+    <p data-en="Reserve your table or order online for pickup and delivery." data-ko="테이블을 예약하거나 픽업 및 배달 주문을 해보세요.">Reserve your table or order online for pickup and delivery.</p>
+    <a href="#" class="btn-white" data-en="Reserve a Table" data-ko="예약하기">Reserve a Table</a>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="K Food Solution" class="logo-img" style="margin-bottom: 16px; filter: brightness(0) invert(1);">
+        <p data-en="Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition." data-ko="혁신과 품질, 그리고 전통에 대한 깊은 존경으로 한국 최고의 음식 문화를 전합니다.">Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5 data-en="Company" data-ko="회사">Company</h5>
+          <ul>
+            <li><a href="#" data-en="About Us" data-ko="회사 소개">About Us</a></li>
+            <li><a href="index.html" data-en="Our Brands" data-ko="브랜드">Our Brands</a></li>
+            <li><a href="#" data-en="Careers" data-ko="채용">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-en="Support" data-ko="고객지원">Support</h5>
+          <ul>
+            <li><a href="#" data-en="Contact" data-ko="문의">Contact</a></li>
+            <li><a href="#" data-en="Locations" data-ko="매장 안내">Locations</a></li>
+            <li><a href="#" data-en="FAQ" data-ko="자주 묻는 질문">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <div class="phone">+60 3-0000-0000</div>
+        <div class="phone-label" data-en="General Inquiry" data-ko="대표 전화">General Inquiry</div>
+        <div class="email">info@kfoodsolution.com</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 K Food Solution. All rights reserved.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="#" data-en="Privacy Policy" data-ko="개인정보처리방침">Privacy Policy</a></li>
+        <li><a href="#" data-en="Terms of Service" data-ko="이용약관">Terms of Service</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // ─── LANGUAGE TOGGLE ───
+    const langToggle = document.getElementById('langToggle');
+    const langButtons = langToggle.querySelectorAll('button');
+    let currentLang = 'en';
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        if (lang === currentLang) return;
+        currentLang = lang;
+        langButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-en][data-ko]').forEach(el => {
+          el.innerHTML = el.dataset[lang];
+        });
+      });
+    });
+
+    // ─── SCROLL ANIMATIONS (banners + fade-ins) ───
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-in, .story-banner-content').forEach(el => observer.observe(el));
+
+    // Banner-level reveal (for decorative circles)
+    const bannerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          bannerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.story-banner').forEach(el => bannerObserver.observe(el));
+
+    // ─── PARALLAX SCROLL EFFECT ───
+    const storyBanners = document.querySelectorAll('.story-banner');
+
+    function updateParallax() {
+      const scrollY = window.scrollY;
+      const windowH = window.innerHeight;
+
+      storyBanners.forEach(banner => {
+        const rect = banner.getBoundingClientRect();
+        const bannerCenter = rect.top + rect.height / 2;
+        const offset = (bannerCenter - windowH / 2) / windowH;
+
+        // Parallax: bg moves at 30% of scroll speed
+        const bg = banner.querySelector('.story-banner-bg');
+        if (bg) {
+          const parallaxY = offset * -40;
+          bg.style.transform = 'scale(1.15) translateY(' + parallaxY + 'px)';
+        }
+
+        // Subtle overlay opacity shift
+        const overlay = banner.querySelector('.story-banner-overlay');
+        if (overlay) {
+          const opacity = 0.3 + Math.abs(offset) * 0.15;
+          overlay.style.background = 'rgba(0,0,0,' + Math.min(opacity, 0.55) + ')';
+        }
+      });
+
+      requestAnimationFrame(updateParallax);
+    }
+
+    // Only run parallax on non-mobile (performance)
+    if (window.innerWidth > 900) {
+      requestAnimationFrame(updateParallax);
+    }
+
+    // ─── STICKY SUBNAV ACTIVE STATE ───
+    const subnavLinks = document.querySelectorAll('.brand-subnav a');
+    const allSections = document.querySelectorAll('#story, #menu, #info');
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY + 180;
+      allSections.forEach(section => {
+        if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+          const id = section.getAttribute('id');
+          subnavLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
