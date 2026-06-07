@@ -1,1 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inquiry — K Food Solution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root {
+      --color-bg: #FAFAF7;
+      --color-text: #1A1A1A;
+      --color-text-light: #6B6B6B;
+      --color-accent: #C8102E;
+      --color-white: #FFFFFF;
+      --color-dark: #111111;
+      --color-border: #E0DDD6;
+      --font-en: 'Google Sans', 'Google Sans Display', 'Product Sans', sans-serif;
+      --font-kr: 'Noto Sans KR', sans-serif;
+      --font-body: var(--font-en);
+      --max-width: 1280px;
+      --header-height: 80px;
+    }
+
+    html[lang="ko"] { --font-body: var(--font-kr); }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      background: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--header-height);
+      background: rgba(250, 250, 247, 0.95);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: var(--max-width); margin: 0 auto;
+      padding: 0 40px; height: 100%;
+      display: flex; align-items: center;
+      justify-content: space-between; position: relative;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--color-text); }
+    .logo-img { height: 40px; width: auto; display: block; }
+    .nav-links {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none; color: var(--color-text);
+      font-size: 15px; font-weight: 400; position: relative; padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 1.5px; background: var(--color-accent); transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-right > a { text-decoration: none; font-size: 14px; color: var(--color-text-light); }
+    .lang-toggle {
+      display: flex; align-items: center; background: #EEEEE9;
+      border-radius: 8px; padding: 3px; cursor: pointer; user-select: none;
+    }
+    .lang-toggle button {
+      background: none; border: none; padding: 6px 14px;
+      font-size: 13px; font-weight: 500; cursor: pointer; border-radius: 6px;
+      color: var(--color-text-light); transition: color 0.25s ease, background 0.25s ease;
+      font-family: var(--font-en);
+    }
+    .lang-toggle button.active {
+      background: var(--color-white); color: var(--color-text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .btn-header {
+      display: inline-block; background: var(--color-accent);
+      color: var(--color-white) !important; padding: 10px 22px;
+      border-radius: 6px; font-size: 14px; font-weight: 500;
+      text-decoration: none;
+    }
+    .menu-toggle {
+      display: none; background: none; border: none; cursor: pointer;
+      width: 32px; height: 32px; flex-direction: column; justify-content: center; gap: 6px;
+    }
+    .menu-toggle span { display: block; width: 24px; height: 2px; background: var(--color-text); border-radius: 1px; }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      margin-top: var(--header-height);
+      padding: 80px 40px 60px;
+      max-width: var(--max-width);
+      margin-left: auto; margin-right: auto;
+      text-align: center;
+    }
+    .page-hero-label {
+      font-size: 13px; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 2.5px; color: var(--color-accent); margin-bottom: 16px;
+      opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease 0.1s forwards;
+    }
+    .page-hero h1 {
+      font-family: var(--font-body);
+      font-size: clamp(32px, 4.5vw, 52px); font-weight: 700;
+      color: var(--color-text); letter-spacing: -0.5px; margin-bottom: 16px;
+      opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+    .page-hero p {
+      font-size: 17px; color: var(--color-text-light);
+      line-height: 1.7; max-width: 560px; margin: 0 auto;
+      opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease 0.35s forwards;
+    }
+
+    /* ─── OPPORTUNITIES ─── */
+    .opps-section {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 40px 60px;
+    }
+
+    .opps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .opp-card {
+      padding: 36px 32px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .opp-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    }
+
+    .opp-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: #F3F2EE;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .opp-card h3 {
+      font-size: 18px; font-weight: 600;
+      color: var(--color-text); margin-bottom: 10px;
+    }
+
+    .opp-card p {
+      font-size: 14px; color: var(--color-text-light);
+      line-height: 1.7;
+    }
+
+    /* ─── FORM SECTION ─── */
+    .form-section {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 40px 100px;
+    }
+
+    .form-card {
+      padding: 48px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+    }
+
+    .form-card h2 {
+      font-size: 24px; font-weight: 700;
+      color: var(--color-text); margin-bottom: 8px;
+    }
+
+    .form-card > p {
+      font-size: 15px; color: var(--color-text-light);
+      line-height: 1.6; margin-bottom: 36px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px; font-weight: 500;
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+
+    .form-group label .req {
+      color: var(--color-accent); margin-left: 2px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--color-text);
+      background: var(--color-bg);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.08);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #B0AEA6;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236B6B6B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-divider {
+      height: 1px;
+      background: var(--color-border);
+      margin: 32px 0;
+    }
+
+    .form-section-label {
+      font-size: 13px; font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--color-accent);
+      margin-bottom: 20px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 15px 24px;
+      background: var(--color-dark);
+      color: var(--color-white);
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+      margin-top: 8px;
+    }
+    .btn-submit:hover { background: var(--color-accent); }
+    .btn-submit:active { transform: scale(0.98); }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--color-text-light);
+      margin-top: 16px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer { background: var(--color-dark); color: rgba(255,255,255,0.6); padding: 60px 40px; }
+    .footer-inner {
+      max-width: var(--max-width); margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px;
+    }
+    .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 300px; }
+    .footer-links { display: flex; gap: 60px; }
+    .footer-col h5 { color: var(--color-white); font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; transition: color 0.2s ease; }
+    .footer-col a:hover { color: var(--color-white); }
+    .footer-contact { text-align: right; }
+    .footer-contact .phone { font-family: var(--font-en); font-size: 24px; color: var(--color-white); margin-bottom: 4px; }
+    .footer-contact .phone-label { font-size: 13px; margin-bottom: 16px; }
+    .footer-contact .email { font-size: 14px; color: rgba(255,255,255,0.5); }
+    .footer-bottom {
+      max-width: var(--max-width); margin: 40px auto 0; padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .footer-bottom-links { display: flex; gap: 24px; list-style: none; }
+    .footer-bottom-links a { text-decoration: none; font-size: 13px; color: rgba(255,255,255,0.35); }
+    .footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .nav-links, .nav-right { display: none; }
+      .menu-toggle { display: flex; }
+      .header-inner { padding: 0 24px; }
+      .page-hero { padding: 60px 24px 40px; }
+      .opps-section { padding: 0 24px 60px; }
+      .opps-grid { grid-template-columns: 1fr; }
+      .form-section { padding: 0 24px 60px; }
+      .form-card { padding: 32px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer { padding: 48px 24px; }
+      .footer-inner { flex-direction: column; }
+      .footer-links { flex-direction: column; gap: 32px; }
+      .footer-contact { text-align: left; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="K Food Solution" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" data-en="Brands" data-ko="브랜드">Brands</a></li>
+        <li><a href="#" data-en="About" data-ko="소개">About</a></li>
+        <li><a href="#" data-en="Locations" data-ko="매장">Locations</a></li>
+        <li><a href="contact.html" data-en="Contact" data-ko="문의">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="lang-toggle" id="langToggle">
+          <button class="active" data-lang="en">EN</button>
+          <button data-lang="ko">한국어</button>
+        </div>
+        <a href="inquiry.html" class="btn-header" data-en="Inquiry" data-ko="문의하기">Inquiry</a>
+      </div>
+      <button class="menu-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══ PAGE HERO ═══ -->
+  <section class="page-hero">
+    <p class="page-hero-label" data-en="Business & Franchise" data-ko="사업 및 프랜차이즈">Business & Franchise</p>
+    <h1 data-en="Grow with K Food Solution" data-ko="K Food Solution과 함께 성장하세요">Grow with K Food Solution</h1>
+    <p data-en="We're looking for passionate partners to bring authentic Korean dining to new communities. Explore franchise opportunities, business partnerships, and more." data-ko="진정한 한식 경험을 새로운 지역에 전할 열정적인 파트너를 찾고 있습니다. 프랜차이즈, 비즈니스 파트너십 등 다양한 기회를 확인해 보세요.">We're looking for passionate partners to bring authentic Korean dining to new communities. Explore franchise opportunities, business partnerships, and more.</p>
+  </section>
+
+  <!-- ═══ OPPORTUNITY CARDS ═══ -->
+  <section class="opps-section">
+    <div class="opps-grid">
+      <div class="opp-card fade-in">
+        <div class="opp-icon">🏪</div>
+        <h3 data-en="Franchise" data-ko="프랜차이즈">Franchise</h3>
+        <p data-en="Open your own Oiso, Mimi Guksu, or Neulbom Garden location. We provide full operational support, training, and brand resources to help you succeed." data-ko="나만의 Oiso, Mimi Guksu, Neulbom Garden 매장을 오픈하세요. 성공적인 운영을 위한 전폭적인 지원, 교육, 브랜드 자산을 제공합니다.">Open your own Oiso, Mimi Guksu, or Neulbom Garden location. We provide full operational support, training, and brand resources to help you succeed.</p>
+      </div>
+      <div class="opp-card fade-in">
+        <div class="opp-icon">🤝</div>
+        <h3 data-en="Business Partnership" data-ko="비즈니스 파트너십">Business Partnership</h3>
+        <p data-en="Interested in supply chain, co-branding, or campus dining partnerships? Let's explore how we can create value together." data-ko="공급망, 공동 브랜딩, 캠퍼스 다이닝 파트너십에 관심이 있으신가요? 함께 가치를 만들어 갈 방법을 찾아봅시다.">Interested in supply chain, co-branding, or campus dining partnerships? Let's explore how we can create value together.</p>
+      </div>
+      <div class="opp-card fade-in">
+        <div class="opp-icon">🍽️</div>
+        <h3 data-en="Catering & Events" data-ko="케이터링 및 이벤트">Catering & Events</h3>
+        <p data-en="Korean BBQ pop-ups, corporate catering, or campus events — we bring the full K Food experience to your venue." data-ko="한국 바비큐 팝업, 기업 케이터링, 캠퍼스 이벤트 — K Food의 풍성한 경험을 여러분의 장소로 가져갑니다.">Korean BBQ pop-ups, corporate catering, or campus events — we bring the full K Food experience to your venue.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ INQUIRY FORM ═══ -->
+  <section class="form-section">
+    <div class="form-card fade-in">
+      <h2 data-en="Send us a message" data-ko="메시지 보내기">Send us a message</h2>
+      <p data-en="Tell us about your interest and we'll get back to you within 1–2 business days." data-ko="관심 분야를 알려주시면 1–2 영업일 이내에 회신드리겠습니다.">Tell us about your interest and we'll get back to you within 1–2 business days.</p>
+
+      <p class="form-section-label" data-en="Your Information" data-ko="기본 정보">Your Information</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label data-en="First Name <span class='req'>*</span>" data-ko="이름 <span class='req'>*</span>">First Name <span class="req">*</span></label>
+          <input type="text" placeholder="John">
+        </div>
+        <div class="form-group">
+          <label data-en="Last Name <span class='req'>*</span>" data-ko="성 <span class='req'>*</span>">Last Name <span class="req">*</span></label>
+          <input type="text" placeholder="Doe">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label data-en="Email <span class='req'>*</span>" data-ko="이메일 <span class='req'>*</span>">Email <span class="req">*</span></label>
+        <input type="email" placeholder="john@example.com">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label data-en="Phone <span class='req'>*</span>" data-ko="전화번호 <span class='req'>*</span>">Phone <span class="req">*</span></label>
+          <input type="tel" placeholder="+60 12-345-6789">
+        </div>
+        <div class="form-group">
+          <label data-en="Company / Organization" data-ko="회사 / 기관">Company / Organization</label>
+          <input type="text" placeholder="Your company name">
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+      <p class="form-section-label" data-en="Your Interest" data-ko="관심 분야">Your Interest</p>
+
+      <div class="form-group">
+        <label data-en="Inquiry Type <span class='req'>*</span>" data-ko="문의 유형 <span class='req'>*</span>">Inquiry Type <span class="req">*</span></label>
+        <select>
+          <option value="" disabled selected>Select an option</option>
+          <option value="franchise" data-en="Franchise Opportunity" data-ko="프랜차이즈 기회">Franchise Opportunity</option>
+          <option value="partnership" data-en="Business Partnership" data-ko="비즈니스 파트너십">Business Partnership</option>
+          <option value="catering" data-en="Catering & Events" data-ko="케이터링 및 이벤트">Catering & Events</option>
+          <option value="supply" data-en="Supply / Distribution" data-ko="공급 / 유통">Supply / Distribution</option>
+          <option value="other" data-en="Other" data-ko="기타">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label data-en="Preferred Brand" data-ko="관심 브랜드">Preferred Brand</label>
+        <select>
+          <option value="" disabled selected>Select a brand</option>
+          <option value="oiso">Oiso — Korean BBQ</option>
+          <option value="mimi">Mimi Guksu — Noodle Soups</option>
+          <option value="neulbom">Neulbom Garden — Homestyle</option>
+          <option value="all" data-en="All Brands / Open to Discussion" data-ko="전체 브랜드 / 협의 가능">All Brands / Open to Discussion</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label data-en="Proposed Location / Region" data-ko="희망 지역">Proposed Location / Region</label>
+        <input type="text" placeholder="e.g. Kuala Lumpur, Penang, etc.">
+      </div>
+
+      <div class="form-group">
+        <label data-en="Message <span class='req'>*</span>" data-ko="메시지 <span class='req'>*</span>">Message <span class="req">*</span></label>
+        <textarea placeholder="Tell us about your background, goals, and how you'd like to work with K Food Solution..."></textarea>
+      </div>
+
+      <button class="btn-submit" data-en="Submit Inquiry" data-ko="문의 제출">Submit Inquiry</button>
+
+      <p class="form-note" data-en="By submitting this form, you agree to our privacy policy. We'll never share your information with third parties." data-ko="이 양식을 제출하면 개인정보 처리방침에 동의하는 것으로 간주됩니다. 귀하의 정보를 제3자와 공유하지 않습니다.">By submitting this form, you agree to our privacy policy. We'll never share your information with third parties.</p>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="K Food Solution" class="logo-img" style="margin-bottom: 16px; filter: brightness(0) invert(1);">
+        <p data-en="Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition." data-ko="혁신과 품질, 그리고 전통에 대한 깊은 존경으로 한국 최고의 음식 문화를 전합니다.">Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5 data-en="Company" data-ko="회사">Company</h5>
+          <ul>
+            <li><a href="#" data-en="About Us" data-ko="회사 소개">About Us</a></li>
+            <li><a href="index.html" data-en="Our Brands" data-ko="브랜드">Our Brands</a></li>
+            <li><a href="#" data-en="Careers" data-ko="채용">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-en="Support" data-ko="고객지원">Support</h5>
+          <ul>
+            <li><a href="contact.html" data-en="Contact" data-ko="문의">Contact</a></li>
+            <li><a href="#" data-en="Locations" data-ko="매장 안내">Locations</a></li>
+            <li><a href="#" data-en="FAQ" data-ko="자주 묻는 질문">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <div class="phone">+60 3-0000-0000</div>
+        <div class="phone-label" data-en="General Inquiry" data-ko="대표 전화">General Inquiry</div>
+        <div class="email">info@kfoodsolution.com</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 K Food Solution. All rights reserved.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="#" data-en="Privacy Policy" data-ko="개인정보처리방침">Privacy Policy</a></li>
+        <li><a href="#" data-en="Terms of Service" data-ko="이용약관">Terms of Service</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // ─── LANGUAGE TOGGLE ───
+    const langToggle = document.getElementById('langToggle');
+    const langButtons = langToggle.querySelectorAll('button');
+    let currentLang = 'en';
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        if (lang === currentLang) return;
+        currentLang = lang;
+        langButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-en][data-ko]').forEach(el => {
+          el.innerHTML = el.dataset[lang];
+        });
+      });
+    });
+
+    // ─── SCROLL ANIMATIONS ───
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ─── FORM SUBMIT (placeholder) ───
+    document.querySelector('.btn-submit').addEventListener('click', (e) => {
+      e.preventDefault();
+      const btn = e.target;
+      const originalText = btn.textContent;
+      btn.textContent = currentLang === 'ko' ? '제출 완료!' : 'Submitted!';
+      btn.style.background = '#2E7D32';
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.background = '';
+      }, 2500);
+    });
+  </script>
+
+</body>
+</html>
