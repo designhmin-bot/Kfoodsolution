@@ -183,8 +183,8 @@
       margin-bottom: 80px;
     }
     .principle-row:last-child { margin-bottom: 0; }
-    .principle-row:nth-child(even) .principle-visual { order: 2; }
-    .principle-row:nth-child(even) .principle-text { order: 1; }
+    .principle-row:nth-child(odd) .principle-visual { order: 2; }
+    .principle-row:nth-child(odd) .principle-text { order: 1; }
 
     .principle-visual {
       aspect-ratio: 4 / 3;
@@ -196,10 +196,10 @@
       position: absolute; inset: 0;
       transition: transform 0.6s ease;
     }
-    .principle-row:nth-child(1) .principle-visual-bg { background: linear-gradient(135deg, #2D1810 0%, #5C3829 100%); }
-    .principle-row:nth-child(2) .principle-visual-bg { background: linear-gradient(135deg, #1A2E1A 0%, #2E4A2E 100%); }
-    .principle-row:nth-child(3) .principle-visual-bg { background: linear-gradient(135deg, #2D1F3D 0%, #4A3560 100%); }
-    .principle-row:nth-child(4) .principle-visual-bg { background: linear-gradient(135deg, #1A1A1A 0%, #333 100%); }
+    .principle-row:nth-child(2) .principle-visual-bg { background: linear-gradient(135deg, #2D1810 0%, #5C3829 100%); }
+    .principle-row:nth-child(3) .principle-visual-bg { background: linear-gradient(135deg, #1A2E1A 0%, #2E4A2E 100%); }
+    .principle-row:nth-child(4) .principle-visual-bg { background: linear-gradient(135deg, #2D1F3D 0%, #4A3560 100%); }
+    .principle-row:nth-child(5) .principle-visual-bg { background: linear-gradient(135deg, #1A1A1A 0%, #333 100%); }
     .principle-visual:hover .principle-visual-bg { transform: scale(1.05); }
 
     .principle-visual-bg::before {
@@ -370,8 +370,8 @@
       .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
       .principles { padding: 60px 24px; }
       .principle-row { grid-template-columns: 1fr; gap: 32px; margin-bottom: 60px; }
-      .principle-row:nth-child(even) .principle-visual { order: 0; }
-      .principle-row:nth-child(even) .principle-text { order: 0; }
+      .principle-row:nth-child(odd) .principle-visual { order: 0; }
+      .principle-row:nth-child(odd) .principle-text { order: 0; }
       .brands-section { padding: 60px 24px; }
       .brands-grid { grid-template-columns: 1fr; gap: 20px; }
       .brand-card { aspect-ratio: 16 / 10; }
