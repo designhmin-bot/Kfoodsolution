@@ -323,9 +323,10 @@
 
     /* ─── FOOTER ─── */
     .footer {
-      background: var(--color-dark);
-      color: rgba(255, 255, 255, 0.6);
+      background: var(--color-bg);
+      color: var(--color-text-light);
       padding: 60px 40px;
+      border-top: 1px solid var(--color-border);
     }
 
     .footer-inner {
@@ -335,20 +336,16 @@
       align-items: flex-start; flex-wrap: wrap; gap: 40px;
     }
 
-    .footer-brand .logo-text {
-      color: var(--color-white);
-      font-size: 20px; margin-bottom: 16px;
-    }
-    .footer-brand .logo-text span { color: var(--color-accent); }
-
     .footer-brand p {
-      font-size: 14px; line-height: 1.7; max-width: 300px;
+      font-size: 14px; line-height: 1.7;
+      max-width: 300px;
+      color: var(--color-text-light);
     }
 
     .footer-links { display: flex; gap: 60px; }
 
     .footer-col h5 {
-      color: var(--color-white);
+      color: var(--color-text);
       font-size: 14px; font-weight: 600;
       margin-bottom: 16px;
     }
@@ -358,39 +355,48 @@
     }
     .footer-col a {
       text-decoration: none;
-      color: rgba(255, 255, 255, 0.5);
+      color: var(--color-text-light);
       font-size: 14px;
       transition: color 0.2s ease;
     }
-    .footer-col a:hover { color: var(--color-white); }
+    .footer-col a:hover { color: var(--color-text); }
 
     .footer-contact { text-align: right; }
     .footer-contact .phone {
       font-family: var(--font-en);
-      font-size: 24px; color: var(--color-white);
+      font-size: 24px;
+      color: var(--color-text);
       margin-bottom: 4px;
     }
-    .footer-contact .phone-label { font-size: 13px; margin-bottom: 16px; }
-    .footer-contact .email { font-size: 14px; color: rgba(255, 255, 255, 0.5); }
+    .footer-contact .phone-label {
+      font-size: 13px;
+      margin-bottom: 16px;
+      color: var(--color-text-light);
+    }
+    .footer-contact .email {
+      font-size: 14px;
+      color: var(--color-text-light);
+    }
 
     .footer-bottom {
       max-width: var(--max-width);
       margin: 40px auto 0;
       padding-top: 32px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid var(--color-border);
       display: flex; justify-content: space-between;
       align-items: center; flex-wrap: wrap; gap: 16px;
     }
-    .footer-bottom p { font-size: 13px; color: rgba(255, 255, 255, 0.3); }
+    .footer-bottom p { font-size: 13px; color: var(--color-text-light); }
 
     .footer-bottom-links {
       display: flex; gap: 24px; list-style: none;
     }
     .footer-bottom-links a {
       text-decoration: none;
-      font-size: 13px; color: rgba(255, 255, 255, 0.35);
+      font-size: 13px;
+      color: var(--color-text-light);
     }
-    .footer-bottom-links a:hover { color: rgba(255, 255, 255, 0.7); }
+    .footer-bottom-links a:hover { color: var(--color-text); }
 
     /* ─── ANIMATIONS ─── */
     @keyframes fadeUp {
@@ -490,7 +496,7 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="logo.png" alt="K Food Solution" class="logo-img" style="margin-bottom: 16px; filter: brightness(0) invert(1);">
+        <img src="logo.png" alt="K Food Solution" class="logo-img" style="margin-bottom: 16px;">
         <p data-en="Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition." data-ko="혁신과 품질, 그리고 전통에 대한 깊은 존경으로 한국 최고의 음식 문화를 전합니다.">Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition.</p>
       </div>
 
