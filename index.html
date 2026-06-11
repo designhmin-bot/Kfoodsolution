@@ -187,7 +187,7 @@
     .hero-text {
       position: absolute;
       left: 50%;
-      top: 34%;
+      top: 30%;
       transform: translate(-50%, -50%);
       width: 100%;
       max-width: 880px;
@@ -457,7 +457,7 @@
     @media (max-width: 900px) {
       .nav-links, .nav-right { display: none; }
       .menu-toggle { display: flex; }
-      .hero-text { top: 32%; padding: 0 24px; }
+      .hero-text { top: 29%; padding: 0 24px; }
       .hero-media {
         width: calc(100vw - 48px);
         aspect-ratio: 16 / 10;
@@ -709,7 +709,7 @@
 
       const startOffsetY = () => {
         const vh = window.innerHeight;
-        const textTopPct = isMobile() ? 0.32 : 0.34;            /* matches CSS `top` */
+        const textTopPct = isMobile() ? 0.29 : 0.30;            /* matches CSS `top` */
         const textBottom = vh * textTopPct + heroText.offsetHeight / 2;
         const gap = Math.max(32, vh * 0.04);
         /* offset of the card's center from the viewport center */
