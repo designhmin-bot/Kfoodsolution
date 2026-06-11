@@ -299,19 +299,13 @@
       cursor: pointer;
       opacity: 0;
       transform: translateY(40px);
-      /* fallback bg colors */
-      background: #1a1a1a;
+      background: transparent;
     }
-
-    .brand-card:nth-child(1) { background: #2A1A12; }
-    .brand-card:nth-child(2) { background: #1A2E1A; }
-    .brand-card:nth-child(3) { background: #2D1F3D; }
 
     .brand-card.visible { animation: fadeUp 0.7s ease forwards; }
     .brand-card:nth-child(2).visible { animation-delay: 0.1s; }
     .brand-card:nth-child(3).visible { animation-delay: 0.2s; }
 
-    /* The image fills the entire card and zooms on hover */
     .brand-card img {
       position: absolute;
       inset: 0;
