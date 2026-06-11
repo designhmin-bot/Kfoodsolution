@@ -238,9 +238,9 @@
       top: 50%;
       width: min(1200px, calc(100vw - 80px));
       aspect-ratio: 21 / 9;
-      /* centered, then pushed down so it peeks below the statement text;
-         GSAP mirrors this exact state on init (xPercent/yPercent/y) */
-      transform: translate(-50%, calc(-50% + 20vh));
+      /* centered, then pushed down so it clears the statement text;
+         GSAP replaces this with a measured offset on init */
+      transform: translate(-50%, calc(-50% + 26vh));
       border-radius: 16px;
       overflow: hidden;
       background: linear-gradient(135deg, #2D1810 0%, #4A2520 30%, #1A1A1A 100%);
@@ -461,7 +461,7 @@
       .hero-media {
         width: calc(100vw - 48px);
         aspect-ratio: 16 / 10;
-        transform: translate(-50%, calc(-50% + 22vh));
+        transform: translate(-50%, calc(-50% + 28vh));
         border-radius: 12px;
       }
       .brands { padding: 60px 24px 80px; }
@@ -645,6 +645,10 @@
         document.querySelectorAll('[data-en][data-ko]').forEach(el => {
           el.innerHTML = el.dataset[lang];
         });
+        /* text height changes between languages → re-measure the hero start state */
+        if (window.ScrollTrigger) {
+          requestAnimationFrame(() => ScrollTrigger.refresh());
+        }
       });
     });
 
@@ -693,10 +697,36 @@
         delay: 0.45
       });
 
-      /* mirror the CSS start transform with GSAP-managed values so the
-         scrub tweens a single source of truth (no shorthand conflicts) */
-      const startOffsetY = () => window.innerHeight * (window.innerWidth <= 900 ? 0.22 : 0.20);
+      /* ── start position: derived from the real text height ──
+         The card's top edge must sit below the text block's bottom edge
+         (plus a gap), no matter the viewport size or language. A fixed
+         vh offset can't guarantee that, so we measure. */
+      const isMobile = () => window.innerWidth <= 900;
+
+      const cardHeight = () => isMobile()
+        ? (window.innerWidth - 48) * 10 / 16                    /* 16:10 card */
+        : Math.min(1200, window.innerWidth - 80) * 9 / 21;      /* 21:9 card  */
+
+      const startOffsetY = () => {
+        const vh = window.innerHeight;
+        const textTopPct = isMobile() ? 0.32 : 0.34;            /* matches CSS `top` */
+        const textBottom = vh * textTopPct + heroText.offsetHeight / 2;
+        const gap = Math.max(32, vh * 0.04);
+        /* offset of the card's center from the viewport center */
+        const needed = (textBottom + gap + cardHeight() / 2) - vh / 2;
+        return Math.max(needed, vh * 0.18);   /* never higher than a gentle peek */
+      };
+
       gsap.set(media, { xPercent: -50, yPercent: -50, y: startOffsetY() });
+
+      /* re-derive the start state whenever ScrollTrigger recalculates
+         (resize, orientation change, manual refresh after language swap).
+         clearProps wipes mid-scrub inline values so the tween re-records
+         clean start values; ScrollTrigger then re-applies the progress. */
+      ScrollTrigger.addEventListener('refreshInit', () => {
+        gsap.set(media, { clearProps: 'width,height,borderRadius' });
+        gsap.set(media, { y: startOffsetY() });
+      });
 
       /* pinned scrub */
       const tl = gsap.timeline({
