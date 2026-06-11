@@ -28,7 +28,6 @@
     }
 
     html[lang="ko"] { --font-body: var(--font-kr); }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -120,7 +119,6 @@
       padding: 3px;
       cursor: pointer;
       user-select: none;
-      position: relative;
       gap: 0;
     }
 
@@ -292,108 +290,41 @@
       list-style: none;
     }
 
+    /* ─── BRAND CARD ─── */
     .brand-card {
       position: relative;
       border-radius: 14px;
       overflow: hidden;
       aspect-ratio: 4 / 5;
       cursor: pointer;
-      opacity: 0; transform: translateY(40px);
+      opacity: 0;
+      transform: translateY(40px);
+      /* fallback bg colors */
+      background: #1a1a1a;
     }
+
+    .brand-card:nth-child(1) { background: #2A1A12; }
+    .brand-card:nth-child(2) { background: #1A2E1A; }
+    .brand-card:nth-child(3) { background: #2D1F3D; }
 
     .brand-card.visible { animation: fadeUp 0.7s ease forwards; }
     .brand-card:nth-child(2).visible { animation-delay: 0.1s; }
     .brand-card:nth-child(3).visible { animation-delay: 0.2s; }
 
-    .brand-card-bg {
-      position: absolute; inset: 0;
-      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .brand-card:hover .brand-card-bg { transform: scale(1.06); }
-
-    /* Card 1 (Oiso) — no background gradient since it has a real photo */
-    .brand-card:nth-child(1) .brand-card-bg {
-      background: #2A1A12;
-    }
-
-    .brand-card:nth-child(1) .brand-card-bg img {
+    /* The image fills the entire card and zooms on hover */
+    .brand-card img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       display: block;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .brand-card:nth-child(2) .brand-card-bg {
-      background: linear-gradient(160deg, #1A2E1A 0%, #2E4A2E 40%, #142014 100%);
-    }
-    .brand-card:nth-child(3) .brand-card-bg {
-      background: linear-gradient(160deg, #2D1F3D 0%, #4A3560 40%, #1A1425 100%);
-    }
-
-    .brand-card-bg::before {
-      content: '';
-      position: absolute;
-      width: 180px; height: 180px;
-      border-radius: 50%;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -55%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .brand-card-bg::after {
-      content: '';
-      position: absolute;
-      width: 120px; height: 120px;
-      border-radius: 50%;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -55%);
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.04), transparent 70%);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .brand-card-content {
-      position: absolute; inset: 0;
-      padding: 32px;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      z-index: 2;
-      background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%);
-    }
-
-    .brand-card-number {
-      position: absolute;
-      top: 28px; left: 32px;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.35);
-      letter-spacing: 1px;
-      font-family: var(--font-en);
-    }
-
-    .brand-card h4 {
-      color: var(--color-white);
-      font-family: var(--font-en);
-      font-size: 22px; font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .brand-card p {
-      color: rgba(255, 255, 255, 0.65);
-      font-size: 14px; line-height: 1.6;
-    }
-
-    .brand-card-arrow {
-      position: absolute;
-      top: 28px; right: 32px;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-    .brand-card:hover .brand-card-arrow {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.3);
-      color: white;
+    .brand-card:hover img {
+      transform: scale(1.06);
     }
 
     /* ─── FOOTER ─── */
@@ -549,42 +480,14 @@
     </div>
 
     <ul class="brands-grid">
-
-      <!-- OISO — with photo -->
       <li class="brand-card">
-        <div class="brand-card-bg">
-          <img src="assets/images/brand_oiso_f.jpg" alt="Oiso">
-        </div>
-        <div class="brand-card-content">
-          <span class="brand-card-number">01</span>
-          <div class="brand-card-arrow">→</div>
-          <h4>Oiso</h4>
-          <p data-en="Premium Korean BBQ experience with prime cuts and traditional banchan." data-ko="최상급 고기와 전통 반찬으로 즐기는 프리미엄 한국 바비큐.">Premium Korean BBQ experience with prime cuts and traditional banchan.</p>
-        </div>
+        <img src="assets/images/brand_oiso_f.jpg" alt="Oiso">
       </li>
-
       <li class="brand-card">
-        <div class="brand-card-bg">
-          <img src="assets/images/brand_mimi_f.jpg" alt="Mimi">
-        </div>
-        <div class="brand-card-content">
-          <span class="brand-card-number">02</span>
-          <div class="brand-card-arrow">→</div>
-          <h4>Mimi Guksu</h4>
-          <p data-en="Handmade Korean noodle soups for comfort and warmth, every bowl made fresh." data-ko="따뜻함과 정성을 담은 수제 한국식 국수, 매 그릇 신선하게.">Handmade Korean noodle soups for comfort and warmth, every bowl made fresh.</p>
-        </div>
+        <img src="assets/images/brand_mimi_f.jpg" alt="Mimi Guksu">
       </li>
-
       <li class="brand-card">
-        <div class="brand-card-bg">
-          <img src="assets/images/brand_nbg_f.jpg" alt="Mimi">
-        </div>
-        <div class="brand-card-content">
-          <span class="brand-card-number">03</span>
-          <div class="brand-card-arrow">→</div>
-          <h4>Neulbom Garden</h4>
-          <p data-en="Farm-to-table Korean homestyle dining with seasonal ingredients." data-ko="제철 식재료로 차려내는 산지 직송 한식 가정식.">Farm-to-table Korean homestyle dining with seasonal ingredients.</p>
-        </div>
+        <img src="assets/images/brand_nbg_f.jpg" alt="Neulbom Garden">
       </li>
     </ul>
   </section>
@@ -633,7 +536,6 @@
   </footer>
 
   <script>
-    // ─── LANGUAGE TOGGLE ───
     const langToggle = document.getElementById('langToggle');
     const langButtons = langToggle.querySelectorAll('button');
     let currentLang = 'en';
@@ -642,21 +544,16 @@
       btn.addEventListener('click', () => {
         const lang = btn.dataset.lang;
         if (lang === currentLang) return;
-
         currentLang = lang;
-
         langButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
         document.documentElement.lang = lang;
-
         document.querySelectorAll('[data-en][data-ko]').forEach(el => {
           el.innerHTML = el.dataset[lang];
         });
       });
     });
 
-    // ─── SCROLL ANIMATIONS ───
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
