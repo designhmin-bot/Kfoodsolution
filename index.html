@@ -28,7 +28,7 @@
     }
 
     html[lang="ko"] { --font-body: var(--font-kr); }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: auto; } /* smooth-scroll fights ScrollTrigger scrub */
 
     body {
       font-family: var(--font-body);
@@ -167,17 +167,35 @@
       background: var(--color-text); border-radius: 1px;
     }
 
-    /* ─── HERO ─── */
+    /* ════════════════════════════════════════════════════════════
+       HERO — pinned scroll sequence (Bonif-style)
+       Stage A: dark statement text on bg, image as a card below
+       Stage B: image expands to full viewport; the SAME text rides
+                down to center and turns white over the image
+       ════════════════════════════════════════════════════════════ */
     .hero {
-      margin-top: var(--header-height);
-      padding: 80px 40px 0;
-      max-width: var(--max-width);
-      margin-left: auto; margin-right: auto;
+      position: relative;
+      height: 100vh;
+      height: 100svh;
+      overflow: hidden;
     }
 
+    /* Statement text — persists through the whole sequence.
+       Color is driven by CSS variables so GSAP can tween them, and the
+       language toggle (which rebuilds the <em> via innerHTML) still
+       inherits the current scrub state. */
     .hero-text {
+      position: absolute;
+      left: 50%;
+      top: 34%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 880px;
+      padding: 0 40px;
       text-align: center;
-      margin-bottom: 48px;
+      z-index: 3;
+      --hero-ink: var(--color-text);
+      --hero-em: var(--color-accent);
     }
 
     .hero-text h2 {
@@ -185,15 +203,20 @@
       font-weight: 700;
       font-size: clamp(28px, 4vw, 48px);
       line-height: 1.35;
-      color: var(--color-text);
+      color: var(--hero-ink);
       letter-spacing: -0.5px;
-      opacity: 0; transform: translateY(30px);
-      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .hero-text h2 .line {
+      display: block;
+      opacity: 0;
+      transform: translateY(30px);
+      will-change: transform, opacity;
     }
 
     .hero-text h2 em {
       font-style: normal;
-      color: var(--color-accent);
+      color: var(--hero-em);
     }
 
     .hero-text > p {
@@ -203,19 +226,37 @@
       line-height: 1.7;
       max-width: 520px;
       margin-left: auto; margin-right: auto;
-      opacity: 0; transform: translateY(20px);
-      animation: fadeUp 0.8s ease 0.2s forwards;
+      opacity: 0;
+      transform: translateY(20px);
+      will-change: transform, opacity;
     }
 
-    .hero-image {
-      position: relative;
-      width: 100%;
+    /* The expanding image — starts as your rounded 21:9 card */
+    .hero-media {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(1200px, calc(100vw - 80px));
+      aspect-ratio: 21 / 9;
+      /* centered, then pushed down so it peeks below the statement text;
+         GSAP mirrors this exact state on init (xPercent/yPercent/y) */
+      transform: translate(-50%, calc(-50% + 20vh));
       border-radius: 16px;
       overflow: hidden;
-      aspect-ratio: 21 / 9;
       background: linear-gradient(135deg, #2D1810 0%, #4A2520 30%, #1A1A1A 100%);
-      opacity: 0; transform: translateY(30px) scale(0.98);
-      animation: fadeUpScale 1s ease 0.3s forwards;
+      z-index: 2;
+      will-change: width, height, transform, border-radius;
+    }
+
+    .hero-media > img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.12);   /* parallax headroom, settles to 1 on scrub */
+      will-change: transform;
     }
 
     .hero-image-overlay {
@@ -226,34 +267,43 @@
       z-index: 1;
     }
 
-    .hero-image-content {
+    /* scrim that fades in as the image expands, for text legibility */
+    .hero-scrim {
       position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
+      background: rgba(0, 0, 0, 0.32);
+      opacity: 0;
       z-index: 2;
     }
 
-    .hero-image-content p {
-      color: rgba(255, 255, 255, 0.95);
-      font-family: var(--font-body);
-      font-size: clamp(22px, 3.5vw, 42px);
-      font-weight: 500;
-      text-align: center;
-      line-height: 1.4;
-      padding: 0 40px;
-    }
-
-    .hero-image-content p em {
-      font-style: normal;
-      color: var(--color-accent-warm);
-    }
-
-    .hero-image::before {
-      content: '';
+    /* scroll cue */
+    .hero-cue {
       position: absolute;
-      top: -40px; right: -40px;
-      width: 200px; height: 200px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(200, 16, 46, 0.08), transparent 70%);
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-text-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-en);
+    }
+    .hero-cue::after {
+      content: '';
+      width: 1px;
+      height: 30px;
+      background: currentColor;
+      animation: cue 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+      transform-origin: top;
+    }
+    @keyframes cue {
+      0% { transform: scaleY(0); }
+      45% { transform: scaleY(1); }
+      100% { transform: scaleY(1); opacity: 0; }
     }
 
     /* ─── BRANDS SECTION ─── */
@@ -402,15 +452,18 @@
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes fadeUpScale {
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
       .nav-links, .nav-right { display: none; }
       .menu-toggle { display: flex; }
-      .hero { padding: 60px 24px 0; }
+      .hero-text { top: 32%; padding: 0 24px; }
+      .hero-media {
+        width: calc(100vw - 48px);
+        aspect-ratio: 16 / 10;
+        transform: translate(-50%, calc(-50% + 22vh));
+        border-radius: 12px;
+      }
       .brands { padding: 60px 24px 80px; }
       .brands-grid { grid-template-columns: 1fr; gap: 20px; }
       .brand-card { aspect-ratio: 16 / 10; }
@@ -422,8 +475,39 @@
       .header-inner { padding: 0 24px; }
     }
 
-    @media (max-width: 600px) {
-      .hero-image { aspect-ratio: 16 / 10; border-radius: 12px; }
+    /* ─── REDUCED MOTION: fall back to the original static layout ─── */
+    @media (prefers-reduced-motion: reduce) {
+      .hero {
+        height: auto;
+        overflow: visible;
+        margin-top: var(--header-height);
+        padding: 80px 40px 0;
+        max-width: var(--max-width);
+        margin-left: auto; margin-right: auto;
+      }
+      .hero-text {
+        position: static;
+        transform: none;
+        max-width: none;
+        padding: 0;
+        margin-bottom: 48px;
+      }
+      .hero-text h2 .line,
+      .hero-text > p {
+        opacity: 1;
+        transform: none;
+      }
+      .hero-media {
+        position: relative;
+        left: auto; top: auto;
+        transform: none;
+        width: 100%;
+      }
+      .hero-media > img { transform: none; }
+      .hero-scrim { opacity: 0.18; }
+      .hero-cue { display: none; }
+      .brand-card { opacity: 1; transform: none; }
+      .brand-card.visible { animation: none; }
     }
   </style>
 </head>
@@ -457,20 +541,26 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
+  <!-- HERO (pinned scroll sequence) -->
+  <section class="hero" id="hero">
+
+    <!-- Stage A: dark statement text -->
     <div class="hero-text">
-      <h2 data-en="We bring <em>Korea's finest flavors</em><br>to your table." data-ko="한국 최고의 맛을<br><em>당신의 식탁</em>으로 전합니다.">We bring <em>Korea's finest flavors</em><br>to your table.</h2>
+      <h2>
+        <span class="line" data-en="We bring <em>Korea's finest flavors</em>" data-ko="한국 최고의 맛을">We bring <em>Korea's finest flavors</em></span>
+        <span class="line" data-en="to your table." data-ko="<em>당신의 식탁</em>으로 전합니다.">to your table.</span>
+      </h2>
       <p data-en="K Food Solution delivers authentic Korean food experiences through carefully curated brands, quality ingredients, and a passion for culinary excellence." data-ko="K Food Solution은 엄선된 브랜드, 최상의 식재료, 그리고 요리에 대한 열정을 통해 진정한 한식 경험을 전달합니다.">K Food Solution delivers authentic Korean food experiences through carefully curated brands, quality ingredients, and a passion for culinary excellence.</p>
     </div>
 
-    <div class="hero-image">
-  <img src="assets/images/home_banner_1.jpg" alt="K Food Solution" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">
-  <div class="hero-image-overlay"></div>
-  <div class="hero-image-content">
-    <p data-en="Crafted with care,<br>served with <em>heart</em>." data-ko="정성을 담아 만들고,<br><em>마음</em>을 담아 드립니다.">Crafted with care,<br>served with <em>heart</em>.</p>
-  </div>
-</div>
+    <!-- Expanding image -->
+    <div class="hero-media">
+      <img src="assets/images/home_banner_1.jpg" alt="K Food Solution">
+      <div class="hero-image-overlay"></div>
+      <div class="hero-scrim"></div>
+    </div>
+
+    <div class="hero-cue" data-en="Scroll" data-ko="스크롤">Scroll</div>
   </section>
 
   <!-- BRANDS -->
@@ -536,7 +626,10 @@
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
+    /* ─── LANGUAGE TOGGLE (unchanged mechanism) ─── */
     const langToggle = document.getElementById('langToggle');
     const langButtons = langToggle.querySelectorAll('button');
     let currentLang = 'en';
@@ -555,6 +648,7 @@
       });
     });
 
+    /* ─── BRAND CARD REVEALS (unchanged) ─── */
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -565,6 +659,93 @@
     }, { threshold: 0.15 });
 
     document.querySelectorAll('.brand-card').forEach(card => observer.observe(card));
+
+    /* ─── HERO SCROLL SEQUENCE ─── */
+    (function () {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced || !window.gsap) return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const heroText   = document.querySelector('.hero-text');
+      const startLines = gsap.utils.toArray('.hero-text h2 .line');
+      const heroSub    = document.querySelector('.hero-text > p');
+      const media      = document.querySelector('.hero-media');
+      const mediaImg   = document.querySelector('.hero-media > img');
+      const scrim      = document.querySelector('.hero-scrim');
+      const cue        = document.querySelector('.hero-cue');
+
+      /* intro: staggered fade-up, same rhythm as your original CSS animation.
+         The scrub never touches the lines' opacity, so scrolling back up
+         can no longer "lose" the headline. */
+      gsap.to(startLines, {
+        opacity: 1, y: 0,
+        duration: 0.85, ease: 'power3.out',
+        stagger: 0.16, delay: 0.15
+      });
+
+      /* subtitle fades in on load, then out during the scrub — fromTo pins
+         both ends so reversing the scroll restores it correctly */
+      gsap.set(heroSub, { opacity: 0, y: 20 });
+      gsap.to(heroSub, {
+        opacity: 1, y: 0,
+        duration: 0.8, ease: 'power3.out',
+        delay: 0.45
+      });
+
+      /* mirror the CSS start transform with GSAP-managed values so the
+         scrub tweens a single source of truth (no shorthand conflicts) */
+      const startOffsetY = () => window.innerHeight * (window.innerWidth <= 900 ? 0.22 : 0.20);
+      gsap.set(media, { xPercent: -50, yPercent: -50, y: startOffsetY() });
+
+      /* pinned scrub */
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: '+=150%',      /* scroll distance of the sequence */
+          scrub: 0.6,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true
+        },
+        defaults: { ease: 'none' }
+      });
+
+      tl
+        /* subtitle + cue fade out; headline stays */
+        .fromTo(heroSub, { opacity: 1, y: 0 }, { opacity: 0, y: -24, duration: 0.25 }, 0)
+        .to(cue, { opacity: 0, duration: 0.15 }, 0)
+
+        /* card glides to dead center and expands to full bleed */
+        .to(media, {
+          width: '100vw',
+          height: '100vh',
+          borderRadius: 0,
+          y: 0,
+          duration: 0.85
+        }, 0.05)
+
+        /* inner image settles from 1.12 → 1 (parallax-zoom) */
+        .to(mediaImg, { scale: 1, duration: 0.85 }, 0.05)
+
+        /* headline rides down to the center of the expanded image */
+        .to(heroText, { top: '50%', duration: 0.85 }, 0.05)
+
+        /* scrim darkens for legibility */
+        .to(scrim, { opacity: 1, duration: 0.35 }, 0.4)
+
+        /* headline color shifts: ink → white, accent red → warm
+           (tweened as CSS variables so the language toggle's innerHTML
+           swap still inherits the current scrub state) */
+        .to(heroText, {
+          '--hero-ink': '#FFFFFF',
+          '--hero-em': '#E8A87C',
+          duration: 0.4
+        }, 0.4);
+
+      window.addEventListener('orientationchange', () => ScrollTrigger.refresh());
+    })();
   </script>
 
 </body>
