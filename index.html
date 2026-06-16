@@ -28,7 +28,7 @@
     }
 
     html[lang="ko"] { --font-body: var(--font-kr); }
-    html { scroll-behavior: auto; } /* smooth-scroll fights ScrollTrigger scrub */
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: var(--font-body);
@@ -168,141 +168,200 @@
     }
 
     /* ════════════════════════════════════════════════════════════
-       HERO — pinned scroll sequence (Bonif-style)
-       Stage A: dark statement text on bg, image as a card below
-       Stage B: image expands to full viewport; the SAME text rides
-                down to center and turns white over the image
+       ANNOUNCEMENT BANNER — full-bleed horizontal slider (3 slides)
        ════════════════════════════════════════════════════════════ */
-    .hero {
+    .announce {
       position: relative;
-      height: 100vh;
-      height: 100svh;
-      overflow: hidden;
-    }
-
-    /* Statement text — persists through the whole sequence.
-       Color is driven by CSS variables so GSAP can tween them, and the
-       language toggle (which rebuilds the <em> via innerHTML) still
-       inherits the current scrub state. */
-    .hero-text {
-      position: absolute;
-      left: 50%;
-      top: 30%;
-      transform: translate(-50%, -50%);
       width: 100%;
-      max-width: 880px;
-      padding: 0 40px;
-      text-align: center;
-      z-index: 3;
-      --hero-ink: var(--color-text);
-      --hero-em: var(--color-accent);
-    }
-
-    .hero-text h2 {
-      font-family: var(--font-body);
-      font-weight: 700;
-      font-size: clamp(28px, 4vw, 48px);
-      line-height: 1.35;
-      color: var(--hero-ink);
-      letter-spacing: -0.5px;
-    }
-
-    .hero-text h2 .line {
-      display: block;
-      opacity: 0;
-      transform: translateY(30px);
-      will-change: transform, opacity;
-    }
-
-    .hero-text h2 em {
-      font-style: normal;
-      color: var(--hero-em);
-    }
-
-    .hero-text > p {
-      margin-top: 20px;
-      font-size: 16px;
-      color: var(--color-text-light);
-      line-height: 1.7;
-      max-width: 520px;
-      margin-left: auto; margin-right: auto;
-      opacity: 0;
-      transform: translateY(20px);
-      will-change: transform, opacity;
-    }
-
-    /* The expanding image — starts as your rounded 21:9 card */
-    .hero-media {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: min(1200px, calc(100vw - 80px));
-      aspect-ratio: 21 / 9;
-      /* centered, then pushed down so it clears the statement text;
-         GSAP replaces this with a measured offset on init */
-      transform: translate(-50%, calc(-50% + 26vh));
+      height: clamp(480px, 80vh, 780px);
       overflow: hidden;
-      background: linear-gradient(135deg, #2D1810 0%, #4A2520 30%, #1A1A1A 100%);
-      z-index: 2;
-      will-change: width, height, transform;
+      background: var(--color-dark);
     }
 
-    .hero-media > img {
+    .announce-viewport {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .announce-track {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      transition: transform 0.75s cubic-bezier(0.65, 0, 0.35, 1);
+      will-change: transform;
+    }
+
+    .announce-slide {
+      position: relative;
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .announce-slide img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       display: block;
-      transform: scale(1.12);   /* parallax headroom, settles to 1 on scrub */
-      will-change: transform;
+      transform: scale(1.06);
+      transition: transform 6s ease-out;
     }
+    .announce-slide.is-active img { transform: scale(1); }
 
-    .hero-image-overlay {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 30% 60%, rgba(200, 16, 46, 0.15) 0%, transparent 60%),
-        radial-gradient(ellipse at 70% 40%, rgba(232, 168, 124, 0.12) 0%, transparent 50%);
-      z-index: 1;
-    }
-
-    /* scrim that fades in as the image expands, for text legibility */
-    .hero-scrim {
-      position: absolute; inset: 0;
-      background: rgba(0, 0, 0, 0.32);
-      opacity: 0;
-      z-index: 2;
-    }
-
-    /* scroll cue */
-    .hero-cue {
+    /* left-weighted scrim keeps announcement copy legible over any image */
+    .announce-slide .scrim {
       position: absolute;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 4;
-      font-size: 11px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--color-text-light);
+      inset: 0;
+      background:
+        linear-gradient(90deg,
+          rgba(0,0,0,0.74) 0%,
+          rgba(0,0,0,0.50) 36%,
+          rgba(0,0,0,0.12) 72%,
+          rgba(0,0,0,0) 100%),
+        radial-gradient(ellipse at 18% 70%, rgba(200,16,46,0.18) 0%, transparent 55%);
+    }
+
+    .announce-content {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      height: 100%;
+      padding: calc(var(--header-height) + 16px) 40px 96px;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .announce-inner { max-width: 580px; }
+
+    .announce-eyebrow {
+      display: inline-flex;
       align-items: center;
       gap: 10px;
       font-family: var(--font-en);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-accent-warm);
+      margin-bottom: 18px;
     }
-    .hero-cue::after {
+    .announce-eyebrow::before {
       content: '';
-      width: 1px;
-      height: 30px;
-      background: currentColor;
-      animation: cue 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
-      transform-origin: top;
+      width: 28px;
+      height: 1.5px;
+      background: var(--color-accent-warm);
     }
-    @keyframes cue {
-      0% { transform: scaleY(0); }
-      45% { transform: scaleY(1); }
-      100% { transform: scaleY(1); opacity: 0; }
+    html[lang="ko"] .announce-eyebrow { letter-spacing: 0.06em; }
+
+    .announce-title {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: clamp(30px, 4.4vw, 56px);
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      color: var(--color-white);
+      margin-bottom: 20px;
+    }
+
+    .announce-sub {
+      font-size: clamp(15px, 1.4vw, 18px);
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 480px;
+      margin-bottom: 32px;
+    }
+
+    .announce-cta {
+      display: inline-block;
+      background: var(--color-accent);
+      color: var(--color-white);
+      padding: 14px 30px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+    .announce-cta:hover {
+      background: var(--color-white);
+      color: var(--color-dark);
+      transform: translateY(-2px);
+    }
+
+    /* staggered reveal of the active slide's copy */
+    .announce-eyebrow,
+    .announce-title,
+    .announce-sub,
+    .announce-cta {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .announce-slide.is-active .announce-eyebrow { opacity: 1; transform: none; transition-delay: 0.18s; }
+    .announce-slide.is-active .announce-title   { opacity: 1; transform: none; transition-delay: 0.30s; }
+    .announce-slide.is-active .announce-sub     { opacity: 1; transform: none; transition-delay: 0.42s; }
+    .announce-slide.is-active .announce-cta     { opacity: 1; transform: none; transition-delay: 0.54s; }
+
+    /* ─── ARROWS ─── */
+    .announce-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(0,0,0,0.25);
+      color: var(--color-white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .announce-arrow:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+    .announce-arrow svg { width: 18px; height: 18px; }
+    .announce-arrow.prev { left: 24px; }
+    .announce-arrow.next { right: 24px; }
+
+    /* ─── DOTS ─── */
+    .announce-dots {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .announce-dots button {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.45);
+      cursor: pointer;
+      transition: width 0.35s ease, background 0.35s ease;
+    }
+    .announce-dots button.active {
+      width: 28px;
+      background: var(--color-white);
     }
 
     /* ─── BRANDS SECTION ─── */
@@ -451,16 +510,23 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* ─── FOCUS VISIBILITY ─── */
+    .announce-arrow:focus-visible,
+    .announce-dots button:focus-visible,
+    .announce-cta:focus-visible {
+      outline: 2px solid var(--color-white);
+      outline-offset: 3px;
+    }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
       .nav-links, .nav-right { display: none; }
       .menu-toggle { display: flex; }
-      .hero-text { top: 29%; padding: 0 24px; }
-      .hero-media {
-        width: calc(100vw - 48px);
-        aspect-ratio: 16 / 10;
-        transform: translate(-50%, calc(-50% + 28vh));
-      }
+      .announce { height: clamp(440px, 72vh, 620px); }
+      .announce-content { padding: calc(var(--header-height) + 12px) 24px 84px; }
+      .announce-arrow { width: 40px; height: 40px; }
+      .announce-arrow.prev { left: 12px; }
+      .announce-arrow.next { right: 12px; }
       .brands { padding: 60px 24px 80px; }
       .brands-grid { grid-template-columns: 1fr; gap: 20px; }
       .brand-card { aspect-ratio: 16 / 10; }
@@ -472,37 +538,15 @@
       .header-inner { padding: 0 24px; }
     }
 
-    /* ─── REDUCED MOTION: fall back to the original static layout ─── */
+    /* ─── REDUCED MOTION ─── */
     @media (prefers-reduced-motion: reduce) {
-      .hero {
-        height: auto;
-        overflow: visible;
-        margin-top: var(--header-height);
-        padding: 80px 40px 0;
-        max-width: var(--max-width);
-        margin-left: auto; margin-right: auto;
-      }
-      .hero-text {
-        position: static;
-        transform: none;
-        max-width: none;
-        padding: 0;
-        margin-bottom: 48px;
-      }
-      .hero-text h2 .line,
-      .hero-text > p {
-        opacity: 1;
-        transform: none;
-      }
-      .hero-media {
-        position: relative;
-        left: auto; top: auto;
-        transform: none;
-        width: 100%;
-      }
-      .hero-media > img { transform: none; }
-      .hero-scrim { opacity: 0.18; }
-      .hero-cue { display: none; }
+      html { scroll-behavior: auto; }
+      .announce-track { transition: none; }
+      .announce-slide img { transition: none; transform: scale(1); }
+      .announce-eyebrow,
+      .announce-title,
+      .announce-sub,
+      .announce-cta { opacity: 1; transform: none; transition: none; }
       .brand-card { opacity: 1; transform: none; }
       .brand-card.visible { animation: none; }
     }
@@ -538,26 +582,65 @@
     </div>
   </header>
 
-  <!-- HERO (pinned scroll sequence) -->
-  <section class="hero" id="hero">
+  <!-- ANNOUNCEMENT BANNER (full-width 3-slide slider) -->
+  <!-- Swap in your own announcement images: home_banner_1/2/3.jpg -->
+  <section class="announce" id="announce" aria-roledescription="carousel" aria-label="Announcements">
+    <div class="announce-viewport">
+      <div class="announce-track" id="announceTrack">
 
-    <!-- Stage A: dark statement text -->
-    <div class="hero-text">
-      <h2>
-        <span class="line" data-en="We bring <em>Korea's finest flavors</em>" data-ko="한국 최고의 맛을">We bring <em>Korea's finest flavors</em></span>
-        <span class="line" data-en="to your table." data-ko="<em>당신의 식탁</em>으로 전합니다.">to your table.</span>
-      </h2>
-      <p data-en="K Food Solution delivers authentic Korean food experiences through carefully curated brands, quality ingredients, and a passion for culinary excellence." data-ko="K Food Solution은 엄선된 브랜드, 최상의 식재료, 그리고 요리에 대한 열정을 통해 진정한 한식 경험을 전달합니다.">K Food Solution delivers authentic Korean food experiences through carefully curated brands, quality ingredients, and a passion for culinary excellence.</p>
+        <!-- Slide 1 -->
+        <div class="announce-slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 3">
+          <img src="assets/images/home_banner_1.jpg" alt="">
+          <div class="scrim"></div>
+          <div class="announce-content">
+            <div class="announce-inner">
+              <span class="announce-eyebrow" data-en="Now Open" data-ko="오픈 안내">Now Open</span>
+              <h2 class="announce-title" data-en="Oiso — authentic Korean BBQ, now in Malaysia" data-ko="오이소 — 정통 한식 BBQ, 말레이시아 오픈">Oiso — authentic Korean BBQ, now in Malaysia</h2>
+              <p class="announce-sub" data-en="Our flagship Korean dining experience has arrived. Come taste Korea, reimagined for the table." data-ko="한국의 맛을 그대로 담은 플래그십 매장이 문을 열었습니다. 새롭게 재해석한 한식을 지금 만나보세요.">Our flagship Korean dining experience has arrived. Come taste Korea, reimagined for the table.</p>
+              <a href="#" class="announce-cta" data-en="Find a location" data-ko="매장 찾기">Find a location</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="announce-slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+          <img src="assets/images/home_banner_2.jpg" alt="">
+          <div class="scrim"></div>
+          <div class="announce-content">
+            <div class="announce-inner">
+              <span class="announce-eyebrow" data-en="Seasonal Menu" data-ko="시즌 메뉴">Seasonal Menu</span>
+              <h2 class="announce-title" data-en="Summer flavors, freshly served" data-ko="제철 재료로 완성한 여름의 맛">Summer flavors, freshly served</h2>
+              <p class="announce-sub" data-en="Discover limited-time dishes crafted with seasonal Korean ingredients, available across all our brands." data-ko="한국의 제철 식재료로 만든 기간 한정 메뉴를 모든 브랜드 매장에서 만나보세요.">Discover limited-time dishes crafted with seasonal Korean ingredients, available across all our brands.</p>
+              <a href="#" class="announce-cta" data-en="See the menu" data-ko="메뉴 보기">See the menu</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="announce-slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+          <img src="assets/images/home_banner_3.jpg" alt="">
+          <div class="scrim"></div>
+          <div class="announce-content">
+            <div class="announce-inner">
+              <span class="announce-eyebrow" data-en="Partnership" data-ko="파트너십">Partnership</span>
+              <h2 class="announce-title" data-en="Bring K Food Solution to your city" data-ko="K Food Solution을 당신의 도시로">Bring K Food Solution to your city</h2>
+              <p class="announce-sub" data-en="We partner with operators who share our passion for quality. Let's talk about what we can build together." data-ko="품질에 대한 열정을 함께할 파트너를 찾습니다. 함께 만들어갈 가능성에 대해 이야기 나눠요.">We partner with operators who share our passion for quality. Let's talk about what we can build together.</p>
+              <a href="#" class="announce-cta" data-en="Start an inquiry" data-ko="문의하기">Start an inquiry</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <!-- Expanding image -->
-    <div class="hero-media">
-      <img src="assets/images/home_banner_1.jpg" alt="K Food Solution">
-      <div class="hero-image-overlay"></div>
-      <div class="hero-scrim"></div>
-    </div>
+    <button class="announce-arrow prev" id="announcePrev" aria-label="Previous announcement">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <button class="announce-arrow next" id="announceNext" aria-label="Next announcement">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
 
-    <div class="hero-cue" data-en="Scroll" data-ko="스크롤">Scroll</div>
+    <div class="announce-dots" id="announceDots" role="tablist" aria-label="Choose announcement"></div>
   </section>
 
   <!-- BRANDS -->
@@ -623,10 +706,8 @@
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
-    /* ─── LANGUAGE TOGGLE (unchanged mechanism) ─── */
+    /* ─── LANGUAGE TOGGLE ─── */
     const langToggle = document.getElementById('langToggle');
     const langButtons = langToggle.querySelectorAll('button');
     let currentLang = 'en';
@@ -642,14 +723,10 @@
         document.querySelectorAll('[data-en][data-ko]').forEach(el => {
           el.innerHTML = el.dataset[lang];
         });
-        /* text height changes between languages → re-measure the hero start state */
-        if (window.ScrollTrigger) {
-          requestAnimationFrame(() => ScrollTrigger.refresh());
-        }
       });
     });
 
-    /* ─── BRAND CARD REVEALS (unchanged) ─── */
+    /* ─── BRAND CARD REVEALS ─── */
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -661,116 +738,77 @@
 
     document.querySelectorAll('.brand-card').forEach(card => observer.observe(card));
 
-    /* ─── HERO SCROLL SEQUENCE ─── */
+    /* ─── ANNOUNCEMENT BANNER SLIDER ─── */
     (function () {
+      const track  = document.getElementById('announceTrack');
+      const slides = Array.from(track.children);
+      const prevBtn = document.getElementById('announcePrev');
+      const nextBtn = document.getElementById('announceNext');
+      const dotsWrap = document.getElementById('announceDots');
+      const banner = document.getElementById('announce');
+      const total = slides.length;
+
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced || !window.gsap) return;
+      const AUTOPLAY_MS = 5500;
 
-      gsap.registerPlugin(ScrollTrigger);
+      let index = 0;
+      let timer = null;
 
-      const heroText   = document.querySelector('.hero-text');
-      const startLines = gsap.utils.toArray('.hero-text h2 .line');
-      const heroSub    = document.querySelector('.hero-text > p');
-      const media      = document.querySelector('.hero-media');
-      const mediaImg   = document.querySelector('.hero-media > img');
-      const scrim      = document.querySelector('.hero-scrim');
-      const cue        = document.querySelector('.hero-cue');
+      /* build dots */
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', 'Go to announcement ' + (i + 1));
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => { goTo(i); restart(); });
+        dotsWrap.appendChild(dot);
+      });
+      const dots = Array.from(dotsWrap.children);
 
-      /* intro: staggered fade-up, same rhythm as your original CSS animation.
-         The scrub never touches the lines' opacity, so scrolling back up
-         can no longer "lose" the headline. */
-      gsap.to(startLines, {
-        opacity: 1, y: 0,
-        duration: 0.85, ease: 'power3.out',
-        stagger: 0.16, delay: 0.15
+      function goTo(i) {
+        index = (i + total) % total;
+        track.style.transform = 'translateX(' + (-index * 100) + '%)';
+        slides.forEach((s, n) => s.classList.toggle('is-active', n === index));
+        dots.forEach((d, n) => {
+          const active = n === index;
+          d.classList.toggle('active', active);
+          d.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+      }
+
+      const next = () => goTo(index + 1);
+      const prev = () => goTo(index - 1);
+
+      nextBtn.addEventListener('click', () => { next(); restart(); });
+      prevBtn.addEventListener('click', () => { prev(); restart(); });
+
+      /* autoplay (skipped under reduced-motion) */
+      function start() {
+        if (reduced) return;
+        stop();
+        timer = setInterval(next, AUTOPLAY_MS);
+      }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+      function restart() { stop(); start(); }
+
+      banner.addEventListener('mouseenter', stop);
+      banner.addEventListener('mouseleave', start);
+      banner.addEventListener('focusin', stop);
+      banner.addEventListener('focusout', start);
+
+      /* keyboard arrows while the banner has focus */
+      banner.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft')  { prev(); restart(); }
+        if (e.key === 'ArrowRight') { next(); restart(); }
       });
 
-      /* subtitle fades in on load, then out during the scrub — fromTo pins
-         both ends so reversing the scroll restores it correctly */
-      gsap.set(heroSub, { opacity: 0, y: 20 });
-      gsap.to(heroSub, {
-        opacity: 1, y: 0,
-        duration: 0.8, ease: 'power3.out',
-        delay: 0.45
+      /* pause when tab is hidden */
+      document.addEventListener('visibilitychange', () => {
+        document.hidden ? stop() : start();
       });
 
-      /* ── start position: derived from the real text height ──
-         The card's top edge must sit below the text block's bottom edge
-         (plus a gap), no matter the viewport size or language. A fixed
-         vh offset can't guarantee that, so we measure. */
-      const isMobile = () => window.innerWidth <= 900;
-
-      const cardHeight = () => isMobile()
-        ? (window.innerWidth - 48) * 10 / 16                    /* 16:10 card */
-        : Math.min(1200, window.innerWidth - 80) * 9 / 21;      /* 21:9 card  */
-
-      const startOffsetY = () => {
-        const vh = window.innerHeight;
-        const textTopPct = isMobile() ? 0.29 : 0.30;            /* matches CSS `top` */
-        const textBottom = vh * textTopPct + heroText.offsetHeight / 2;
-        const gap = Math.max(32, vh * 0.04);
-        /* offset of the card's center from the viewport center */
-        const needed = (textBottom + gap + cardHeight() / 2) - vh / 2;
-        return Math.max(needed, vh * 0.18);   /* never higher than a gentle peek */
-      };
-
-      gsap.set(media, { xPercent: -50, yPercent: -50, y: startOffsetY() });
-
-      /* re-derive the start state whenever ScrollTrigger recalculates
-         (resize, orientation change, manual refresh after language swap).
-         clearProps wipes mid-scrub inline values so the tween re-records
-         clean start values; ScrollTrigger then re-applies the progress. */
-      ScrollTrigger.addEventListener('refreshInit', () => {
-        gsap.set(media, { clearProps: 'width,height' });
-        gsap.set(media, { y: startOffsetY() });
-      });
-
-      /* pinned scrub */
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '#hero',
-          start: 'top top',
-          end: '+=150%',      /* scroll distance of the sequence */
-          scrub: 0.6,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true
-        },
-        defaults: { ease: 'none' }
-      });
-
-      tl
-        /* subtitle + cue fade out; headline stays */
-        .fromTo(heroSub, { opacity: 1, y: 0 }, { opacity: 0, y: -24, duration: 0.25 }, 0)
-        .to(cue, { opacity: 0, duration: 0.15 }, 0)
-
-        /* card glides to dead center and expands to full bleed */
-        .to(media, {
-          width: '100vw',
-          height: '100vh',
-          y: 0,
-          duration: 0.85
-        }, 0.05)
-
-        /* inner image settles from 1.12 → 1 (parallax-zoom) */
-        .to(mediaImg, { scale: 1, duration: 0.85 }, 0.05)
-
-        /* headline rides down to the center of the expanded image */
-        .to(heroText, { top: '50%', duration: 0.85 }, 0.05)
-
-        /* scrim darkens for legibility */
-        .to(scrim, { opacity: 1, duration: 0.35 }, 0.4)
-
-        /* headline color shifts: ink → white, accent red → warm
-           (tweened as CSS variables so the language toggle's innerHTML
-           swap still inherits the current scrub state) */
-        .to(heroText, {
-          '--hero-ink': '#FFFFFF',
-          '--hero-em': '#E8A87C',
-          duration: 0.4
-        }, 0.4);
-
-      window.addEventListener('orientationchange', () => ScrollTrigger.refresh());
+      goTo(0);
+      start();
     })();
   </script>
 
