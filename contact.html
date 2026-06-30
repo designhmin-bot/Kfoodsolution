@@ -328,30 +328,35 @@
     }
 
     /* ─── FOOTER ─── */
-    .footer { background: var(--color-dark); color: rgba(255,255,255,0.6); padding: 60px 40px; }
+    .footer {
+      background: var(--color-bg);
+      color: var(--color-text-light);
+      padding: 60px 40px;
+      border-top: 1px solid var(--color-border);
+    }
     .footer-inner {
       max-width: var(--max-width); margin: 0 auto;
       display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px;
     }
-    .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 300px; }
+    .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 300px; color: var(--color-text-light); }
     .footer-links { display: flex; gap: 60px; }
-    .footer-col h5 { color: var(--color-white); font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+    .footer-col h5 { color: var(--color-text); font-size: 14px; font-weight: 600; margin-bottom: 16px; }
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; transition: color 0.2s ease; }
-    .footer-col a:hover { color: var(--color-white); }
+    .footer-col a { text-decoration: none; color: var(--color-text-light); font-size: 14px; transition: color 0.2s ease; }
+    .footer-col a:hover { color: var(--color-text); }
     .footer-contact { text-align: right; }
-    .footer-contact .phone { font-family: var(--font-en); font-size: 24px; color: var(--color-white); margin-bottom: 4px; }
-    .footer-contact .phone-label { font-size: 13px; margin-bottom: 16px; }
-    .footer-contact .email { font-size: 14px; color: rgba(255,255,255,0.5); }
+    .footer-contact .phone { font-family: var(--font-en); font-size: 24px; color: var(--color-text); margin-bottom: 4px; }
+    .footer-contact .phone-label { font-size: 13px; margin-bottom: 16px; color: var(--color-text-light); }
+    .footer-contact .email { font-size: 14px; color: var(--color-text-light); }
     .footer-bottom {
       max-width: var(--max-width); margin: 40px auto 0; padding-top: 32px;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid var(--color-border);
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
     }
-    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .footer-bottom p { font-size: 13px; color: var(--color-text-light); }
     .footer-bottom-links { display: flex; gap: 24px; list-style: none; }
-    .footer-bottom-links a { text-decoration: none; font-size: 13px; color: rgba(255,255,255,0.35); }
-    .footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+    .footer-bottom-links a { text-decoration: none; font-size: 13px; color: var(--color-text-light); }
+    .footer-bottom-links a:hover { color: var(--color-text); }
 
     /* ─── ANIMATIONS ─── */
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
@@ -384,7 +389,7 @@
   <header class="header">
     <div class="header-inner">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="K Food Solution" class="logo-img">
+        <img src="assets/images/kfoodsolutions.png" alt="K Food Solution" class="logo-img">
       </a>
       <ul class="nav-links">
         <li><a href="index.html" data-en="Brands" data-ko="브랜드">Brands</a></li>
@@ -409,7 +414,7 @@
   <section class="page-hero">
     <p class="page-hero-label" data-en="Get in Touch" data-ko="문의하기">Get in Touch</p>
     <h1 data-en="We'd love to hear from you" data-ko="언제든 연락 주세요">We'd love to hear from you</h1>
-    <p data-en="Whether you have a question about our brands, partnerships, or anything else — our team is ready to help." data-ko="브랜드, 파트너십, 기타 문의 사항이 있으시면 언제든 연락해 주세요. 저희 팀이 도와드리겠습니다.">Whether you have a question about our brands, partnerships, or anything else — our team is ready to help.</p>
+    <p data-en="Whether you have a question about our brands, partnerships, or anything else, our team is ready to help." data-ko="브랜드, 파트너십, 기타 문의 사항이 있으시면 언제든 연락해 주세요. 저희 팀이 도와드리겠습니다.">Whether you have a question about our brands, partnerships, or anything else, our team is ready to help.</p>
   </section>
 
   <!-- ═══ CONTACT CONTENT ═══ -->
@@ -454,12 +459,12 @@
         <h3 data-en="Business Hours" data-ko="영업시간">Business Hours</h3>
         <div class="hours-grid">
           <div class="hours-row">
-            <span class="day" data-en="Monday — Friday" data-ko="월요일 — 금요일">Monday — Friday</span>
-            <span class="time">9:00 AM — 6:00 PM</span>
+            <span class="day" data-en="Monday &mdash; Friday" data-ko="월요일 &mdash; 금요일">Monday &mdash; Friday</span>
+            <span class="time">9:00 AM &mdash; 6:00 PM</span>
           </div>
           <div class="hours-row">
             <span class="day" data-en="Saturday" data-ko="토요일">Saturday</span>
-            <span class="time">10:00 AM — 4:00 PM</span>
+            <span class="time">10:00 AM &mdash; 4:00 PM</span>
           </div>
           <div class="hours-row">
             <span class="day" data-en="Sunday" data-ko="일요일">Sunday</span>
@@ -476,7 +481,7 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="logo.png" alt="K Food Solution" class="logo-img" style="margin-bottom: 16px; filter: brightness(0) invert(1);">
+        <img src="assets/images/kfoodsolutions.png" alt="K Food Solution" class="logo-img" style="margin-bottom: 16px;">
         <p data-en="Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition." data-ko="혁신과 품질, 그리고 전통에 대한 깊은 존경으로 한국 최고의 음식 문화를 전합니다.">Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition.</p>
       </div>
       <div class="footer-links">
