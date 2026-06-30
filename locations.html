@@ -136,7 +136,7 @@
     .store-finder {
       max-width: var(--max-width);
       margin: 0 auto 100px;
-      padding: 0 40px;
+      padding: 0;
       display: grid;
       grid-template-columns: 400px 1fr;
       gap: 0;
@@ -796,6 +796,7 @@
       }
 
       const map = L.map('map', { scrollWheelZoom: false }).setView([3.30, 101.70], 7);
+      map.attributionControl.setPrefix(false);
 
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         subdomains: 'abcd',
@@ -809,7 +810,7 @@
         const c = COORDS[name];
         if (!c) return;
         const marker = L.marker(c, { icon: pinIcon(BRAND_COLORS[card.dataset.brand] || '#C8102E') })
-          .bindPopup('<strong>' + name + '</strong>');
+          .bindPopup('<strong>' + name + '</strong>', { autoPan: false });
         marker.addTo(map);
         card._marker = marker;
       });
@@ -835,6 +836,7 @@
       window.kfsFocusCard = function (card) {
         if (!card._marker) return;
         if (!map.hasLayer(card._marker)) card._marker.addTo(map);
+        map.invalidateSize();
         map.setView(card._marker.getLatLng(), 15, { animate: true });
         card._marker.openPopup();
       };
