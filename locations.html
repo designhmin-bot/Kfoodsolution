@@ -134,8 +134,8 @@
     /* ─── STORE FINDER LAYOUT ─── */
     .store-finder {
       max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 40px 100px;
+      margin: 0 auto 100px;
+      padding: 0 40px;
       display: grid;
       grid-template-columns: 400px 1fr;
       gap: 0;
@@ -275,6 +275,15 @@
       color: var(--color-text-light);
       font-size: 15px;
       position: relative;
+      padding: 0;
+    }
+
+    .map-panel iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      border: 0;
     }
 
     .map-panel-inner {
@@ -289,23 +298,28 @@
     }
 
     /* ─── FOOTER ─── */
-    .footer { background: var(--color-dark); color: rgba(255,255,255,0.6); padding: 60px 40px; }
+    .footer {
+      background: var(--color-bg);
+      color: var(--color-text-light);
+      padding: 60px 40px;
+      border-top: 1px solid var(--color-border);
+    }
     .footer-inner { max-width: var(--max-width); margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; }
-    .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 300px; }
+    .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 300px; color: var(--color-text-light); }
     .footer-links { display: flex; gap: 60px; }
-    .footer-col h5 { color: var(--color-white); font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+    .footer-col h5 { color: var(--color-text); font-size: 14px; font-weight: 600; margin-bottom: 16px; }
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 14px; transition: color 0.2s ease; }
-    .footer-col a:hover { color: var(--color-white); }
+    .footer-col a { text-decoration: none; color: var(--color-text-light); font-size: 14px; transition: color 0.2s ease; }
+    .footer-col a:hover { color: var(--color-text); }
     .footer-contact { text-align: right; }
-    .footer-contact .phone { font-family: var(--font-en); font-size: 24px; color: var(--color-white); margin-bottom: 4px; }
-    .footer-contact .phone-label { font-size: 13px; margin-bottom: 16px; }
-    .footer-contact .email { font-size: 14px; color: rgba(255,255,255,0.5); }
-    .footer-bottom { max-width: var(--max-width); margin: 40px auto 0; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .footer-contact .phone { font-family: var(--font-en); font-size: 24px; color: var(--color-text); margin-bottom: 4px; }
+    .footer-contact .phone-label { font-size: 13px; margin-bottom: 16px; color: var(--color-text-light); }
+    .footer-contact .email { font-size: 14px; color: var(--color-text-light); }
+    .footer-bottom { max-width: var(--max-width); margin: 40px auto 0; padding-top: 32px; border-top: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-bottom p { font-size: 13px; color: var(--color-text-light); }
     .footer-bottom-links { display: flex; gap: 24px; list-style: none; }
-    .footer-bottom-links a { text-decoration: none; font-size: 13px; color: rgba(255,255,255,0.35); }
-    .footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+    .footer-bottom-links a { text-decoration: none; font-size: 13px; color: var(--color-text-light); }
+    .footer-bottom-links a:hover { color: var(--color-text); }
 
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
@@ -340,7 +354,7 @@
   <header class="header">
     <div class="header-inner">
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="K Food Solution" class="logo-img">
+        <img src="assets/images/kfoodsolutions.png" alt="K Food Solution" class="logo-img">
       </a>
       <ul class="nav-links">
         <li><a href="index.html" data-en="Brands" data-ko="브랜드">Brands</a></li>
@@ -370,19 +384,19 @@
   <div class="brand-tabs">
     <button class="brand-tab active" data-brand="all">
       <span data-en="All Brands" data-ko="전체">All Brands</span>
-      <span class="count" id="countAll">8</span>
+      <span class="count" id="countAll">19</span>
     </button>
     <button class="brand-tab" data-brand="oiso">
       <span>Oiso</span>
-      <span class="count" id="countOiso">3</span>
+      <span class="count" id="countOiso">17</span>
     </button>
     <button class="brand-tab" data-brand="mimi">
       <span>Mimi Guksu</span>
-      <span class="count" id="countMimi">3</span>
+      <span class="count" id="countMimi">1</span>
     </button>
     <button class="brand-tab" data-brand="neulbom">
       <span>Neulbom Garden</span>
-      <span class="count" id="countNeulbom">2</span>
+      <span class="count" id="countNeulbom">1</span>
     </button>
   </div>
 
@@ -395,7 +409,7 @@
         <input type="text" id="searchInput" placeholder="Search by name or area..." data-en-placeholder="Search by name or area..." data-ko-placeholder="매장명 또는 지역 검색...">
       </div>
       <div class="store-list-header">
-        <span id="resultCount">8</span> <span id="resultLabel" data-en="locations found" data-ko="개 매장">locations found</span>
+        <span id="resultCount">19</span> <span id="resultLabel" data-en="locations found" data-ko="개 매장">locations found</span>
       </div>
 
       <div class="store-list" id="storeList">
@@ -403,10 +417,10 @@
         <!-- Oiso Locations -->
         <div class="store-card" data-brand="oiso">
           <div class="store-card-brand oiso">Oiso</div>
-          <h4>Oiso — Sunway University</h4>
-          <p class="store-card-address" data-en="Lot G-12, Sunway University Mall<br>Bandar Sunway, Selangor" data-ko="셀랑고르 반다르 선웨이<br>선웨이 대학교 몰 G-12">Lot G-12, Sunway University Mall<br>Bandar Sunway, Selangor</p>
+          <h4>Oiso — Jaya 33</h4>
+          <p class="store-card-address" data-en="Jaya 33, Jalan Semangat<br>Petaling Jaya, Selangor" data-ko="셀랑고르 페탈링자야<br>자야 33, 잘란 스망앗">Jaya 33, Jalan Semangat<br>Petaling Jaya, Selangor</p>
           <div class="store-card-meta">
-            <span>📞 +60 3-7492-0001</span>
+            <span>📞 019-207 6649</span>
             <span>🕐 11AM – 10PM</span>
           </div>
           <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
@@ -414,10 +428,10 @@
 
         <div class="store-card" data-brand="oiso">
           <div class="store-card-brand oiso">Oiso</div>
-          <h4>Oiso — Taylor's Lakeside</h4>
-          <p class="store-card-address" data-en="Block C, Taylor's Lakeside Campus<br>Subang Jaya, Selangor" data-ko="셀랑고르 수방자야<br>테일러스 레이크사이드 캠퍼스 C동">Block C, Taylor's Lakeside Campus<br>Subang Jaya, Selangor</p>
+          <h4>Oiso — Leisure Mall</h4>
+          <p class="store-card-address" data-en="Leisure Mall, Jalan Manis 2<br>Cheras, Kuala Lumpur" data-ko="쿠알라룸푸르 체라스<br>레저 몰, 잘란 마니스 2">Leisure Mall, Jalan Manis 2<br>Cheras, Kuala Lumpur</p>
           <div class="store-card-meta">
-            <span>📞 +60 3-5632-0002</span>
+            <span>📞 03-9134 0093</span>
             <span>🕐 11AM – 10PM</span>
           </div>
           <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
@@ -425,68 +439,186 @@
 
         <div class="store-card" data-brand="oiso">
           <div class="store-card-brand oiso">Oiso</div>
-          <h4>Oiso — INTI Nilai</h4>
-          <p class="store-card-address" data-en="Food Court Level 1, INTI International<br>Nilai, Negeri Sembilan" data-ko="느그리 슴빌란 닐라이<br>INTI 인터내셔널 1층 푸드코트">Food Court Level 1, INTI International<br>Nilai, Negeri Sembilan</p>
+          <h4>Oiso — 3 Damansara</h4>
+          <p class="store-card-address" data-en="Lot G-13, Tropicana City Mall<br>Petaling Jaya, Selangor" data-ko="셀랑고르 페탈링자야<br>트로피카나 시티 몰 G-13">Lot G-13, Tropicana City Mall<br>Petaling Jaya, Selangor</p>
           <div class="store-card-meta">
-            <span>📞 +60 6-7987-0003</span>
-            <span>🕐 11AM – 9PM</span>
-          </div>
-          <span class="store-status closed" data-en="Closed" data-ko="영업 종료">Closed</span>
-        </div>
-
-        <!-- Mimi Guksu Locations -->
-        <div class="store-card" data-brand="mimi">
-          <div class="store-card-brand mimi">Mimi Guksu</div>
-          <h4>Mimi Guksu — APU</h4>
-          <p class="store-card-address" data-en="Jalan Teknologi 5, TPM<br>Bukit Jalil, Kuala Lumpur" data-ko="쿠알라룸푸르 부킷잘릴<br>잘란 테크놀로지 5, TPM">Jalan Teknologi 5, TPM<br>Bukit Jalil, Kuala Lumpur</p>
-          <div class="store-card-meta">
-            <span>📞 +60 3-8996-0004</span>
-            <span>🕐 10AM – 9PM</span>
+            <span>📞 03-7731 1776</span>
+            <span>🕐 11AM – 10PM</span>
           </div>
           <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
         </div>
 
-        <div class="store-card" data-brand="mimi">
-          <div class="store-card-brand mimi">Mimi Guksu</div>
-          <h4>Mimi Guksu — Sunway Pyramid</h4>
-          <p class="store-card-address" data-en="Lot F1-032, Sunway Pyramid Mall<br>Bandar Sunway, Selangor" data-ko="셀랑고르 반다르 선웨이<br>선웨이 피라미드 몰 F1-032">Lot F1-032, Sunway Pyramid Mall<br>Bandar Sunway, Selangor</p>
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — Utropolis</h4>
+          <p class="store-card-address" data-en="Utropolis Marketplace<br>Shah Alam, Selangor" data-ko="셀랑고르 샤알람<br>유트로폴리스 마켓플레이스">Utropolis Marketplace<br>Shah Alam, Selangor</p>
           <div class="store-card-meta">
-            <span>📞 +60 3-7492-0005</span>
+            <span>📞 03-5891 8723</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — The Curve</h4>
+          <p class="store-card-address" data-en="The Curve, Mutiara Damansara<br>Petaling Jaya, Selangor" data-ko="셀랑고르 페탈링자야<br>더 커브, 무티아라 다만사라">The Curve, Mutiara Damansara<br>Petaling Jaya, Selangor</p>
+          <div class="store-card-meta">
+            <span>📞 03-7627 4645</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — Damen</h4>
+          <p class="store-card-address" data-en="Damen Mall, USJ 1<br>Subang Jaya, Selangor" data-ko="셀랑고르 수방자야<br>다멘 몰, USJ 1">Damen Mall, USJ 1<br>Subang Jaya, Selangor</p>
+          <div class="store-card-meta">
+            <span>📞 010-466 4795</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — DC Mall</h4>
+          <p class="store-card-address" data-en="DC Mall, Damansara City<br>Damansara Heights, Kuala Lumpur" data-ko="쿠알라룸푸르 다만사라 하이츠<br>DC 몰, 다만사라 시티">DC Mall, Damansara City<br>Damansara Heights, Kuala Lumpur</p>
+          <div class="store-card-meta">
+            <span>📞 012-487 8910</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — IOI City Mall</h4>
+          <p class="store-card-address" data-en="IOI City Mall, Putrajaya<br>Sepang, Selangor" data-ko="셀랑고르 스팡<br>IOI 시티 몰, 푸트라자야">IOI City Mall, Putrajaya<br>Sepang, Selangor</p>
+          <div class="store-card-meta">
+            <span>📞 03-8958 0540</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — The Sphere</h4>
+          <p class="store-card-address" data-en="Unit G-3, The Sphere, Jalan Kerinchi<br>Bangsar South, Kuala Lumpur" data-ko="쿠알라룸푸르 방사르 사우스<br>더 스피어 G-3, 잘란 크린치">Unit G-3, The Sphere, Jalan Kerinchi<br>Bangsar South, Kuala Lumpur</p>
+          <div class="store-card-meta">
+            <span>📞 03-2242 1349</span>
+            <span>🕐 10AM – 10:30PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — Seremban Gateway</h4>
+          <p class="store-card-address" data-en="Seremban Gateway<br>Seremban, Negeri Sembilan" data-ko="느그리슴빌란 스름반<br>스름반 게이트웨이">Seremban Gateway<br>Seremban, Negeri Sembilan</p>
+          <div class="store-card-meta">
+            <span>📞 014-324 7904</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — Aman Central</h4>
+          <p class="store-card-address" data-en="Aman Central Mall<br>Alor Setar, Kedah" data-ko="크다 알로르스타르<br>아만 센트럴 몰">Aman Central Mall<br>Alor Setar, Kedah</p>
+          <div class="store-card-meta">
+            <span>📞 04-730 9635</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — East Coast Mall</h4>
+          <p class="store-card-address" data-en="East Coast Mall<br>Kuantan, Pahang" data-ko="파항 콴탄<br>이스트 코스트 몰">East Coast Mall<br>Kuantan, Pahang</p>
+          <div class="store-card-meta">
+            <span>📞 012-487 8910</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — Ipoh Parade</h4>
+          <p class="store-card-address" data-en="Lot F37 & 38, 1st Floor, Ipoh Parade<br>Ipoh, Perak" data-ko="페락 이포<br>이포 퍼레이드 F37 & 38, 1층">Lot F37 & 38, 1st Floor, Ipoh Parade<br>Ipoh, Perak</p>
+          <div class="store-card-meta">
+            <span>📞 010-554 1668</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — Permata Sapura</h4>
+          <p class="store-card-address" data-en="Permata Sapura, KLCC Convention Centre<br>Kuala Lumpur" data-ko="쿠알라룸푸르<br>퍼르마타 사푸라, KLCC 컨벤션 센터">Permata Sapura, KLCC Convention Centre<br>Kuala Lumpur</p>
+          <div class="store-card-meta">
+            <span>📞 012-789 8850</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — KTCC Mall</h4>
+          <p class="store-card-address" data-en="KTCC Mall<br>Kuala Terengganu, Terengganu" data-ko="트렝가누 쿠알라트렝가누<br>KTCC 몰">KTCC Mall<br>Kuala Terengganu, Terengganu</p>
+          <div class="store-card-meta">
+            <span>📞 09-622 1372</span>
+            <span>🕐 11AM – 10PM</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — Aeon Tebrau City</h4>
+          <p class="store-card-address" data-en="Aeon Mall Tebrau City<br>Johor Bahru, Johor" data-ko="조호르 조호르바루<br>이온 몰 트브라우 시티">Aeon Mall Tebrau City<br>Johor Bahru, Johor</p>
+          <div class="store-card-meta">
             <span>🕐 10AM – 10PM</span>
           </div>
           <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
         </div>
 
-        <div class="store-card" data-brand="mimi">
-          <div class="store-card-brand mimi">Mimi Guksu</div>
-          <h4>Mimi Guksu — UCSI KL</h4>
-          <p class="store-card-address" data-en="No. 1, Jalan Menara Gading<br>Cheras, Kuala Lumpur" data-ko="쿠알라룸푸르 체라스<br>잘란 므나라 가딩 1번지">No. 1, Jalan Menara Gading<br>Cheras, Kuala Lumpur</p>
+        <div class="store-card" data-brand="oiso">
+          <div class="store-card-brand oiso">Oiso</div>
+          <h4>Oiso — Alamanda</h4>
+          <p class="store-card-address" data-en="Alamanda Shopping Centre<br>Putrajaya" data-ko="푸트라자야<br>알라만다 쇼핑센터">Alamanda Shopping Centre<br>Putrajaya</p>
           <div class="store-card-meta">
-            <span>📞 +60 3-9101-0006</span>
-            <span>🕐 10AM – 9PM</span>
-          </div>
-          <span class="store-status closed" data-en="Closed" data-ko="영업 종료">Closed</span>
-        </div>
-
-        <!-- Neulbom Garden Locations -->
-        <div class="store-card" data-brand="neulbom">
-          <div class="store-card-brand neulbom">Neulbom Garden</div>
-          <h4>Neulbom Garden — Bangsar South</h4>
-          <p class="store-card-address" data-en="Unit 3A-1, The Vertical<br>Bangsar South, Kuala Lumpur" data-ko="쿠알라룸푸르 방사르 사우스<br>더 버티컬 3A-1">Unit 3A-1, The Vertical<br>Bangsar South, Kuala Lumpur</p>
-          <div class="store-card-meta">
-            <span>📞 +60 3-2242-0007</span>
             <span>🕐 11AM – 10PM</span>
           </div>
           <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
         </div>
 
+        <!-- Mimi Guksu -->
+        <div class="store-card" data-brand="mimi">
+          <div class="store-card-brand mimi">Mimi Guksu</div>
+          <h4>Mimi Guksu — Subang Parade</h4>
+          <p class="store-card-address" data-en="Subang Parade<br>Subang Jaya, Selangor" data-ko="셀랑고르 수방자야<br>수방 퍼레이드">Subang Parade<br>Subang Jaya, Selangor</p>
+          <div class="store-card-meta">
+            <span data-en="🍜 Korean noodle restaurant" data-ko="🍜 한국식 국수 전문점">🍜 Korean noodle restaurant</span>
+          </div>
+          <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
+        </div>
+
+        <!-- Neulbom Garden -->
         <div class="store-card" data-brand="neulbom">
           <div class="store-card-brand neulbom">Neulbom Garden</div>
-          <h4>Neulbom Garden — Mont Kiara</h4>
-          <p class="store-card-address" data-en="Lot G-08, 1 Mont Kiara Mall<br>Mont Kiara, Kuala Lumpur" data-ko="쿠알라룸푸르 몬키아라<br>1 몬키아라 몰 G-08">Lot G-08, 1 Mont Kiara Mall<br>Mont Kiara, Kuala Lumpur</p>
+          <h4>Neulbom Garden — Sentul Depot</h4>
+          <p class="store-card-address" data-en="Sentul Depot, Jalan Sentul<br>Sentul, Kuala Lumpur" data-ko="쿠알라룸푸르 센툴<br>센툴 디포, 잘란 센툴">Sentul Depot, Jalan Sentul<br>Sentul, Kuala Lumpur</p>
           <div class="store-card-meta">
-            <span>📞 +60 3-6211-0008</span>
-            <span>🕐 11AM – 10PM</span>
+            <span data-en="🔥 Korean BBQ · hanok-style" data-ko="🔥 한옥 스타일 코리안 BBQ">🔥 Korean BBQ · hanok-style</span>
+            <span>🕐 11AM – 11PM</span>
           </div>
           <span class="store-status open" data-en="Open Now" data-ko="영업 중">Open Now</span>
         </div>
@@ -496,11 +628,11 @@
 
     <!-- RIGHT: Map -->
     <div class="map-panel">
-      <div class="map-panel-inner">
-        <span style="font-size: 32px;">📍</span><br><br>
-        <span data-en="Google Maps embed area" data-ko="구글 맵 영역">Google Maps embed area</span>
-        <p data-en="Embed your Google Map here to show store pins" data-ko="매장 위치 핀을 표시할 구글 맵을 삽입하세요">Embed your Google Map here to show store pins</p>
-      </div>
+      <iframe
+        src="https://www.google.com/maps/d/u/0/embed?mid=1wfnONO01Xg2MAiiQfRQUFuy_fD4LBQQ&ehbc=2E312F"
+        width="100%" height="100%"
+        loading="lazy"
+        title="K Food Solution locations map"></iframe>
     </div>
 
   </div>
@@ -509,7 +641,7 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="logo.png" alt="K Food Solution" class="logo-img" style="margin-bottom: 16px; filter: brightness(0) invert(1);">
+        <img src="assets/images/kfoodsolutions.png" alt="K Food Solution" class="logo-img" style="margin-bottom: 16px;">
         <p data-en="Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition." data-ko="혁신과 품질, 그리고 전통에 대한 깊은 존경으로 한국 최고의 음식 문화를 전합니다.">Delivering Korea's finest food culture through innovation, quality, and a deep respect for tradition.</p>
       </div>
       <div class="footer-links">
@@ -576,7 +708,6 @@
       let count = 0;
       storeCards.forEach(card => {
         const match = brand === 'all' || card.dataset.brand === brand;
-        const searchMatch = card.style.display !== 'search-hidden';
         card.style.display = match ? '' : 'none';
         if (match) count++;
       });
