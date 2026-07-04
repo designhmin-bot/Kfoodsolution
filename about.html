@@ -313,8 +313,20 @@
     .footer-bottom-links a:hover { color: var(--color-text); }
 
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1) var(--d, 0s), transform 0.8s cubic-bezier(0.16,1,0.3,1) var(--d, 0s); }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-left { opacity: 0; transform: translateX(-48px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1) var(--d, 0s), transform 0.9s cubic-bezier(0.16,1,0.3,1) var(--d, 0s); }
+    .fade-right { opacity: 0; transform: translateX(48px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1) var(--d, 0s), transform 0.9s cubic-bezier(0.16,1,0.3,1) var(--d, 0s); }
+    .fade-left.visible, .fade-right.visible { opacity: 1; transform: translateX(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in, .fade-left, .fade-right,
+      .story-banner-content .story-label,
+      .story-banner-content h2,
+      .story-banner-content p,
+      .page-hero-label, .page-hero h1, .page-hero p {
+        opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important;
+      }
+    }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
@@ -388,20 +400,20 @@
   <!-- ═══ STATS BAR ═══ -->
   <section class="stats-bar">
     <div class="stats-grid">
-      <div class="stat-item fade-in">
-        <div class="stat-number">3</div>
+      <div class="stat-item fade-in" style="--d: 0s">
+        <div class="stat-number" data-count="3">0</div>
         <div class="stat-label" data-en="Restaurant Brands" data-ko="레스토랑 브랜드">Restaurant Brands</div>
       </div>
-      <div class="stat-item fade-in">
-        <div class="stat-number">7</div>
+      <div class="stat-item fade-in" style="--d: 0.12s">
+        <div class="stat-number" data-count="7">0</div>
         <div class="stat-label" data-en="Business Areas" data-ko="사업 분야">Business Areas</div>
       </div>
-      <div class="stat-item fade-in">
-        <div class="stat-number">5</div>
+      <div class="stat-item fade-in" style="--d: 0.24s">
+        <div class="stat-number" data-count="5">0</div>
         <div class="stat-label" data-en="Service Values" data-ko="서비스 가치">Service Values</div>
       </div>
-      <div class="stat-item fade-in">
-        <div class="stat-number">1</div>
+      <div class="stat-item fade-in" style="--d: 0.36s">
+        <div class="stat-number" data-count="1">0</div>
         <div class="stat-label" data-en="Central Kitchen" data-ko="센트럴 키친">Central Kitchen</div>
       </div>
     </div>
@@ -410,35 +422,35 @@
   <!-- ═══ PRINCIPLES ═══ -->
   <section class="principles">
     <div class="principles-header">
-      <p class="label" data-en="Our Principles" data-ko="경영 원칙">Our Principles</p>
-      <h2 data-en="What guides everything we do" data-ko="우리의 모든 행동을 이끄는 것">What guides everything we do</h2>
-      <p data-en="Three commitments that shape how we cook, serve, and grow." data-ko="요리하고, 서비스하고, 성장하는 방식을 이끄는 세 가지 약속.">Three commitments that shape how we cook, serve, and grow.</p>
+      <p class="label fade-in" style="--d: 0s" data-en="Our Principles" data-ko="경영 원칙">Our Principles</p>
+      <h2 class="fade-in" style="--d: 0.12s" data-en="What guides everything we do" data-ko="우리의 모든 행동을 이끄는 것">What guides everything we do</h2>
+      <p class="fade-in" style="--d: 0.24s" data-en="Three commitments that shape how we cook, serve, and grow." data-ko="요리하고, 서비스하고, 성장하는 방식을 이끄는 세 가지 약속.">Three commitments that shape how we cook, serve, and grow.</p>
     </div>
 
-    <div class="principle-row fade-in">
-      <div class="principle-visual"><div class="principle-visual-bg"></div></div>
+    <div class="principle-row">
+      <div class="principle-visual fade-left"><div class="principle-visual-bg"></div></div>
       <div class="principle-text">
-        <div class="principle-num">01</div>
-        <h3 data-en="Authentic, Home-Cooked Korean Food" data-ko="정통 한국 가정식">Authentic, Home-Cooked Korean Food</h3>
-        <p data-en="Real Korean home cooking where guests take their time, never a fast-food turnover model." data-ko="손님이 여유롭게 머무는 진짜 한국 가정식. 빠른 회전의 패스트푸드가 아닙니다.">Real Korean home cooking where guests take their time, never a fast-food turnover model.</p>
+        <div class="principle-num fade-in" style="--d: 0.1s">01</div>
+        <h3 class="fade-in" style="--d: 0.2s" data-en="Authentic, Home-Cooked Korean Food" data-ko="정통 한국 가정식">Authentic, Home-Cooked Korean Food</h3>
+        <p class="fade-in" style="--d: 0.3s" data-en="Real Korean home cooking where guests take their time, never a fast-food turnover model." data-ko="손님이 여유롭게 머무는 진짜 한국 가정식. 빠른 회전의 패스트푸드가 아닙니다.">Real Korean home cooking where guests take their time, never a fast-food turnover model.</p>
       </div>
     </div>
 
-    <div class="principle-row fade-in">
-      <div class="principle-visual"><div class="principle-visual-bg"></div></div>
+    <div class="principle-row">
+      <div class="principle-visual fade-right"><div class="principle-visual-bg"></div></div>
       <div class="principle-text">
-        <div class="principle-num">02</div>
-        <h3 data-en="Halal-Conscious, Open to All" data-ko="모두에게 열린 할랄 친화">Halal-Conscious, Open to All</h3>
-        <p data-en="Halal-inspired kitchen principles, a pork-free Muslim-friendly BBQ brand in Neulbom Garden, and Korean halal products from Boramchan. Korean food, open to everyone." data-ko="할랄 기준에서 영감을 받은 주방 원칙, 돼지고기 없는 무슬림 친화 BBQ 늘봄가든, 그리고 보람찬의 한국 할랄 식품까지. 모두에게 열린 한식.">Halal-inspired kitchen principles, a pork-free Muslim-friendly BBQ brand in Neulbom Garden, and Korean halal products from Boramchan. Korean food, open to everyone.</p>
+        <div class="principle-num fade-in" style="--d: 0.1s">02</div>
+        <h3 class="fade-in" style="--d: 0.2s" data-en="Halal-Conscious, Open to All" data-ko="모두에게 열린 할랄 친화">Halal-Conscious, Open to All</h3>
+        <p class="fade-in" style="--d: 0.3s" data-en="Halal-inspired kitchen principles, a pork-free Muslim-friendly BBQ brand in Neulbom Garden, and Korean halal products from Boramchan. Korean food, open to everyone." data-ko="할랄 기준에서 영감을 받은 주방 원칙, 돼지고기 없는 무슬림 친화 BBQ 늘봄가든, 그리고 보람찬의 한국 할랄 식품까지. 모두에게 열린 한식.">Halal-inspired kitchen principles, a pork-free Muslim-friendly BBQ brand in Neulbom Garden, and Korean halal products from Boramchan. Korean food, open to everyone.</p>
       </div>
     </div>
 
-    <div class="principle-row fade-in">
-      <div class="principle-visual"><div class="principle-visual-bg"></div></div>
+    <div class="principle-row">
+      <div class="principle-visual fade-left"><div class="principle-visual-bg"></div></div>
       <div class="principle-text">
-        <div class="principle-num">03</div>
-        <h3 data-en="Built to Grow, Together" data-ko="함께 성장하는 시스템">Built to Grow, Together</h3>
-        <p data-en="Food R&D, a central kitchen, and meticulous standardization keep quality consistent as we grow, from licensing to brand consulting, catering, and K-Grocer. Your success is our story." data-ko="식품 R&D, 센트럴 키친, 세심한 표준화로 성장 속에서도 품질을 지킵니다. 라이선스부터 브랜드 컨설팅, 케이터링, K-Grocer까지. 당신의 성공이 우리의 이야기입니다.">Food R&D, a central kitchen, and meticulous standardization keep quality consistent as we grow, from licensing to brand consulting, catering, and K-Grocer. Your success is our story.</p>
+        <div class="principle-num fade-in" style="--d: 0.1s">03</div>
+        <h3 class="fade-in" style="--d: 0.2s" data-en="Built to Grow, Together" data-ko="함께 성장하는 시스템">Built to Grow, Together</h3>
+        <p class="fade-in" style="--d: 0.3s" data-en="Food R&D, a central kitchen, and meticulous standardization keep quality consistent as we grow, from licensing to brand consulting, catering, and K-Grocer. Your success is our story." data-ko="식품 R&D, 센트럴 키친, 세심한 표준화로 성장 속에서도 품질을 지킵니다. 라이선스부터 브랜드 컨설팅, 케이터링, K-Grocer까지. 당신의 성공이 우리의 이야기입니다.">Food R&D, a central kitchen, and meticulous standardization keep quality consistent as we grow, from licensing to brand consulting, catering, and K-Grocer. Your success is our story.</p>
       </div>
     </div>
   </section>
@@ -446,18 +458,18 @@
   <!-- ═══ OUR BRANDS (same as homepage) ═══ -->
   <section class="brands-section">
     <div class="brands-header">
-      <p class="label" data-en="Our Brands" data-ko="브랜드 소개">Our Brands</p>
-      <h3 data-en="Three brands, one commitment to quality" data-ko="세 개의 브랜드, 하나의 품질 철학">Three brands, one commitment to quality</h3>
+      <p class="label fade-in" style="--d: 0s" data-en="Our Brands" data-ko="브랜드 소개">Our Brands</p>
+      <h3 class="fade-in" style="--d: 0.12s" data-en="Three brands, one commitment to quality" data-ko="세 개의 브랜드, 하나의 품질 철학">Three brands, one commitment to quality</h3>
     </div>
 
     <ul class="brands-grid">
-      <li class="brand-card fade-in" onclick="location.href='oiso.html'">
+      <li class="brand-card fade-in" style="--d: 0s" onclick="location.href='oiso.html'">
         <img src="assets/images/brand_oiso_f.jpg" alt="Oiso">
       </li>
-      <li class="brand-card fade-in" onclick="location.href='mimi-guksu.html'">
+      <li class="brand-card fade-in" style="--d: 0.15s" onclick="location.href='mimi-guksu.html'">
         <img src="assets/images/brand_mimi_f.jpg" alt="Mimi Guksu">
       </li>
-      <li class="brand-card fade-in" onclick="location.href='neulbom-garden.html'">
+      <li class="brand-card fade-in" style="--d: 0.3s" onclick="location.href='neulbom-garden.html'">
         <img src="assets/images/brand_nbg_f.jpg" alt="Neulbom Garden">
       </li>
     </ul>
@@ -465,9 +477,9 @@
 
   <!-- ═══ CTA ═══ -->
   <section class="cta-banner">
-    <h3 data-en="Your success, our story" data-ko="당신의 성공, 우리의 이야기">Your success, our story</h3>
-    <p data-en="Guests, future partners, and Korean food lovers are all welcome. Join our team today." data-ko="손님도, 파트너도, 한식을 사랑하는 분도 모두 환영합니다. 지금 함께하세요.">Guests, future partners, and Korean food lovers are all welcome. Join our team today.</p>
-    <div class="cta-buttons">
+    <h3 class="fade-in" style="--d: 0s" data-en="Your success, our story" data-ko="당신의 성공, 우리의 이야기">Your success, our story</h3>
+    <p class="fade-in" style="--d: 0.12s" data-en="Guests, future partners, and Korean food lovers are all welcome. Join our team today." data-ko="손님도, 파트너도, 한식을 사랑하는 분도 모두 환영합니다. 지금 함께하세요.">Guests, future partners, and Korean food lovers are all welcome. Join our team today.</p>
+    <div class="cta-buttons fade-in" style="--d: 0.24s">
       <a href="inquiry.html" class="btn-white" data-en="Partner With Us" data-ko="파트너십 문의">Partner With Us</a>
       <a href="contact.html" class="btn-outline-light" data-en="Get in Touch" data-ko="연락하기">Get in Touch</a>
     </div>
@@ -541,7 +553,29 @@
         }
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll('.fade-in, .story-banner-content').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-in, .fade-left, .fade-right, .story-banner-content').forEach(el => observer.observe(el));
+
+    // ─── STAT COUNT-UP ───
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        statObserver.unobserve(el);
+        const target = parseInt(el.dataset.count, 10);
+        if (reduceMotion) { el.textContent = target; return; }
+        const duration = 1200;
+        const start = performance.now();
+        function tick(now) {
+          const p = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased);
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-number[data-count]').forEach(el => statObserver.observe(el));
 
     // ─── PARALLAX ───
     const banners = document.querySelectorAll('.story-banner');
