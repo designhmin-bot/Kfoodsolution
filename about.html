@@ -275,10 +275,21 @@
 
     /* ─── CTA BANNER ─── */
     .cta-banner {
-      background: linear-gradient(135deg, #1A1A1A 0%, #2D1810 50%, #111 100%);
+      position: relative;
+      overflow: hidden;
       padding: 80px 40px;
       text-align: center;
     }
+    .cta-banner-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      background-color: #1A1A1A;
+    }
+    .cta-banner-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.55);
+    }
+    .cta-banner-content { position: relative; z-index: 2; }
     .cta-banner h3 {
       font-family: var(--font-body); font-size: clamp(24px, 3vw, 36px); font-weight: 700;
       color: var(--color-white); margin-bottom: 16px;
@@ -486,11 +497,15 @@
 
   <!-- ═══ CTA ═══ -->
   <section class="cta-banner">
-    <h3 class="fade-in" style="--d: 0s" data-en="Your success, our story" data-ko="당신의 성공, 우리의 이야기">Your success, our story</h3>
-    <p class="fade-in" style="--d: 0.12s" data-en="Guests, future partners, and Korean food lovers are all welcome. Join our team today." data-ko="손님도, 파트너도, 한식을 사랑하는 분도 모두 환영합니다. 지금 함께하세요.">Guests, future partners, and Korean food lovers are all welcome. Join our team today.</p>
-    <div class="cta-buttons fade-in" style="--d: 0.24s">
-      <a href="inquiry.html" class="btn-white" data-en="Partner With Us" data-ko="파트너십 문의">Partner With Us</a>
-      <a href="contact.html" class="btn-outline-light" data-en="Get in Touch" data-ko="연락하기">Get in Touch</a>
+    <div class="cta-banner-bg" style="background-image: url('assets/images/about_4.png')"></div>
+    <div class="cta-banner-overlay"></div>
+    <div class="cta-banner-content">
+      <h3 class="fade-in" style="--d: 0s" data-en="Your success, our story" data-ko="당신의 성공, 우리의 이야기">Your success, our story</h3>
+      <p class="fade-in" style="--d: 0.12s" data-en="Guests, future partners, and Korean food lovers are all welcome. Join our team today." data-ko="손님도, 파트너도, 한식을 사랑하는 분도 모두 환영합니다. 지금 함께하세요.">Guests, future partners, and Korean food lovers are all welcome. Join our team today.</p>
+      <div class="cta-buttons fade-in" style="--d: 0.24s">
+        <a href="inquiry.html" class="btn-white" data-en="Partner With Us" data-ko="파트너십 문의">Partner With Us</a>
+        <a href="contact.html" class="btn-outline-light" data-en="Get in Touch" data-ko="연락하기">Get in Touch</a>
+      </div>
     </div>
   </section>
 
