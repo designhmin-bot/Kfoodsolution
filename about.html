@@ -74,10 +74,12 @@
     .story-banner {
       position: relative;
       width: 100%;
-      min-height: 65vh;
       overflow: hidden;
-      display: flex;
-      align-items: center;
+    }
+    .story-banner-img {
+      display: block;
+      width: 100%;
+      height: auto;
     }
     .story-banner-bg {
       position: absolute; inset: 0;
@@ -88,9 +90,10 @@
     .story-banner:nth-child(2) .story-banner-bg { background: linear-gradient(135deg, #111 0%, #1A2E1A 50%, #0A0A0A 100%); }
     .story-banner-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.35); z-index: 1; }
     .story-banner-content {
-      position: relative; z-index: 2;
+      position: absolute; inset: 0; z-index: 2;
       max-width: var(--max-width); width: 100%;
       margin: 0 auto; padding: 80px 40px;
+      display: flex; flex-direction: column; justify-content: center;
     }
     .story-banner-content::before {
       content: ''; display: block; width: 0; height: 2px;
@@ -354,8 +357,9 @@
       .menu-toggle { display: flex; }
       .header-inner { padding: 0 24px; }
       .page-hero { padding: 60px 24px 48px; }
-      .story-banner { min-height: 55vh; }
-      .story-banner-content { padding: 60px 24px; }
+      .story-banner { min-height: 55vh; display: flex; align-items: center; }
+      .story-banner-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .story-banner-content { position: relative; inset: auto; padding: 60px 24px; }
       .story-banner:nth-child(even) .story-banner-content { align-items: flex-start; text-align: left; }
       .stats-bar { padding: 48px 24px; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
@@ -398,20 +402,14 @@
     </div>
   </header>
 
-  <!-- ═══ PAGE HERO ═══ -->
-  <section class="page-hero">
-    <p class="page-hero-label" data-en="About Us" data-ko="회사 소개">About Us</p>
-    <h1 data-en="Authentic Korean flavors,<br><em>made for everyone</em>" data-ko="모두가 즐길 수 있는<br><em>정통 한식</em>의 맛">Authentic Korean flavors,<br><em>made for everyone</em></h1>
-  </section>
-
   <!-- ═══ STORY BANNERS ═══ -->
-  <div>
+  <div style="margin-top: var(--header-height)">
     <section class="story-banner">
-      <div class="story-banner-bg" style="background-image: url('assets/images/about_1.png')"></div>
+      <img class="story-banner-img" src="assets/images/about_4.png" alt="">
       <div class="story-banner-overlay"></div>
       <div class="story-banner-content">
         <span class="story-label" data-en="Our Mission" data-ko="우리의 사명">Our Mission</span>
-        <h2 data-en="Korean home cooking everyone can enjoy" data-ko="누구나 즐길 수 있는 한국 가정식">Korean home cooking everyone can enjoy</h2>
+        <h2 data-en="Authentic Korean flavors, made for everyone" data-ko="모두가 즐길 수 있는 정통 한식의 맛">Authentic Korean flavors, made for everyone</h2>
         <p data-en="Delicious, affordable, and enjoyable. Held to the highest standards of quality and taste, guided by principles inspired by Halal standards. One delicious meal at a time." data-ko="맛있고, 합리적이며, 즐거운 한 끼. 최고의 품질과 맛, 그리고 할랄 기준에서 영감을 받은 원칙을 지킵니다. 맛있는 한 끼 한 끼로 한식을 전합니다.">Delicious, affordable, and enjoyable. Held to the highest standards of quality and taste, guided by principles inspired by Halal standards. One delicious meal at a time.</p>
       </div>
     </section>
@@ -448,7 +446,7 @@
     </div>
 
     <div class="principle-row">
-      <div class="principle-visual fade-left"><img src="assets/images/about_1.png" alt="K Food Solution"></div>
+      <div class="principle-visual fade-left"><img src="assets/images/about_4.png" alt="K Food Solution"></div>
       <div class="principle-text">
         <div class="principle-num fade-in" style="--d: 0.1s">01</div>
         <h3 class="fade-in" style="--d: 0.2s" data-en="Authentic, Home-Cooked Korean Food" data-ko="정통 한국 가정식">Authentic, Home-Cooked Korean Food</h3>
