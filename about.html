@@ -202,6 +202,15 @@
     .principle-row:nth-child(5) .principle-visual-bg { background: linear-gradient(135deg, #1A1A1A 0%, #333 100%); }
     .principle-visual:hover .principle-visual-bg { transform: scale(1.05); }
 
+    .principle-visual img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .principle-visual:hover img { transform: scale(1.05); }
+
     .principle-visual-bg::before {
       content: ''; position: absolute;
       width: 120px; height: 120px; border-radius: 50%;
@@ -387,7 +396,7 @@
   <!-- ═══ STORY BANNERS ═══ -->
   <div>
     <section class="story-banner">
-      <div class="story-banner-bg"></div>
+      <div class="story-banner-bg" style="background-image: url('assets/images/about_4.png')"></div>
       <div class="story-banner-overlay"></div>
       <div class="story-banner-content">
         <span class="story-label" data-en="Our Mission" data-ko="우리의 사명">Our Mission</span>
@@ -428,7 +437,7 @@
     </div>
 
     <div class="principle-row">
-      <div class="principle-visual fade-left"><div class="principle-visual-bg"></div></div>
+      <div class="principle-visual fade-left"><img src="assets/images/about_4.png" alt="K Food Solution"></div>
       <div class="principle-text">
         <div class="principle-num fade-in" style="--d: 0.1s">01</div>
         <h3 class="fade-in" style="--d: 0.2s" data-en="Authentic, Home-Cooked Korean Food" data-ko="정통 한국 가정식">Authentic, Home-Cooked Korean Food</h3>
@@ -437,7 +446,7 @@
     </div>
 
     <div class="principle-row">
-      <div class="principle-visual fade-right"><div class="principle-visual-bg"></div></div>
+      <div class="principle-visual fade-right"><img src="assets/images/about_4.png" alt="K Food Solution"></div>
       <div class="principle-text">
         <div class="principle-num fade-in" style="--d: 0.1s">02</div>
         <h3 class="fade-in" style="--d: 0.2s" data-en="Halal-Conscious, Open to All" data-ko="모두에게 열린 할랄 친화">Halal-Conscious, Open to All</h3>
@@ -446,7 +455,7 @@
     </div>
 
     <div class="principle-row">
-      <div class="principle-visual fade-left"><div class="principle-visual-bg"></div></div>
+      <div class="principle-visual fade-left"><img src="assets/images/about_4.png" alt="K Food Solution"></div>
       <div class="principle-text">
         <div class="principle-num fade-in" style="--d: 0.1s">03</div>
         <h3 class="fade-in" style="--d: 0.2s" data-en="Built to Grow, Together" data-ko="함께 성장하는 시스템">Built to Grow, Together</h3>
